@@ -25,10 +25,7 @@ export class RichText extends ComponentView {
 
   setAttributes(attributes: any) {
     super.setAttributes(attributes);
-    if (
-      MPEnv.platformType === PlatformType.wxMiniProgram ||
-      MPEnv.platformType === PlatformType.swanMiniProgram
-    ) {
+    if (MPEnv.platformType === PlatformType.wxMiniProgram || MPEnv.platformType === PlatformType.swanMiniProgram) {
       this.htmlElement.classList.add("mp_text");
     }
     const maxWidth = attributes.maxWidth;
@@ -43,16 +40,11 @@ export class RichText extends ComponentView {
     } else {
       this.maxHeight = undefined;
     }
-    if (
-      MPEnv.platformType === PlatformType.wxMiniProgram ||
-      MPEnv.platformType === PlatformType.swanMiniProgram
-    ) {
+    if (MPEnv.platformType === PlatformType.wxMiniProgram || MPEnv.platformType === PlatformType.swanMiniProgram) {
       setDOMStyle(this.htmlElement, {
         textAlign: cssTextAlign(attributes.textAlign),
         lineHeight: attributes.height?.toString(),
-        webkitLineClamp: attributes.maxLines
-          ? attributes.maxLines.toString()
-          : "99999",
+        webkitLineClamp: attributes.maxLines ? attributes.maxLines.toString() : "99999",
       });
     } else {
       setDOMStyle(this.htmlElement, {
@@ -68,9 +60,7 @@ export class RichText extends ComponentView {
         wordWrap: "break-word",
         whiteSpace: "pre-line",
         webkitBoxOrient: "vertical",
-        webkitLineClamp: attributes.maxLines
-          ? attributes.maxLines.toString()
-          : "99999",
+        webkitLineClamp: attributes.maxLines ? attributes.maxLines.toString() : "99999",
       });
     }
 
@@ -86,25 +76,18 @@ export class RichText extends ComponentView {
       }
     }
     if (children[0].attributes.text) {
-      (this.htmlElement as HTMLDivElement).innerText =
-        children[0].attributes.text;
+      (this.htmlElement as HTMLDivElement).innerText = children[0].attributes.text;
       if (
         MPEnv.platformType === PlatformType.wxMiniProgram ||
-        MPEnv.platformType === PlatformType.swanMiniProgram
+        MPEnv.platformType === PlatformType.swanMiniProgram ||
+        MPEnv.platformType === PlatformType.aliMiniProgram
       ) {
-        setDOMAttribute(
-          this.htmlElement,
-          "innerText",
-          children[0].attributes.text
-        );
+        setDOMAttribute(this.htmlElement, "innerText", children[0].attributes.text);
       }
     }
     if (children[0].attributes.onTap_el && children[0].attributes.onTap_span) {
       this.htmlElement.onclick = (e) => {
-        this.onClick(
-          children[0].attributes.onTap_el,
-          children[0].attributes.onTap_span
-        );
+        this.onClick(children[0].attributes.onTap_el, children[0].attributes.onTap_span);
         if (e) e.stopPropagation();
       };
     }
@@ -112,12 +95,7 @@ export class RichText extends ComponentView {
   }
 
   async setChildren(children: any) {
-    if (
-      children &&
-      children.length === 1 &&
-      children[0].name === "text_span" &&
-      children[0].attributes?.text
-    ) {
+    if (children && children.length === 1 && children[0].name === "text_span" && children[0].attributes?.text) {
       this.setSingleTextSpan(children);
     } else {
       super.setChildren(children);
@@ -165,7 +143,8 @@ export class TextSpan extends ComponentView {
       (this.htmlElement as HTMLSpanElement).innerText = attributes.text;
       if (
         MPEnv.platformType === PlatformType.wxMiniProgram ||
-        MPEnv.platformType === PlatformType.swanMiniProgram
+        MPEnv.platformType === PlatformType.swanMiniProgram ||
+        MPEnv.platformType === PlatformType.aliMiniProgram
       ) {
         setDOMAttribute(this.htmlElement, "innerText", attributes.text);
       }

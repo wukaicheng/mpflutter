@@ -56,7 +56,11 @@ export class Page {
   async fetchViewport() {
     let viewport = await this.element.getBoundingClientRect();
     if (viewport.height <= 0.1) {
-      if (MPEnv.platformType === PlatformType.wxMiniProgram || MPEnv.platformType === PlatformType.swanMiniProgram) {
+      if (
+        MPEnv.platformType === PlatformType.wxMiniProgram ||
+        MPEnv.platformType === PlatformType.swanMiniProgram ||
+        MPEnv.platformType === PlatformType.aliMiniProgram
+      ) {
         viewport.height = MPEnv.platformScope.getSystemInfoSync().windowHeight;
       } else {
         viewport.height = window.innerHeight;

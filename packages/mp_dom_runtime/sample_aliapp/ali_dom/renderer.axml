@@ -1,0 +1,86 @@
+<import-sjs name="tools" from="./renderer.sjs" />
+
+<block a:if="{{dom[root]}}">
+    <template is="{{tools.tag(dom[root].tag)}}" data="{{style,id:root,dom:dom}}" />
+</block>
+<template name="div">
+    <block a:if="{{dom[id].click}}">
+        <view id="d_{{id}}" class="{{dom[id].class}}" catchTap="{{dom[id].click ? 'onEvent' : ''}}" style="{{tools.style(dom[id].s)}};{{style}}">
+            <block a:for="{{dom[id].n}}" a:for-item="item">
+                <template is="{{tools.tag(dom[item].tag)}}" data="{{id: item, dom:dom}}" />
+            </block>
+            <block a:if="{{dom[id].innerText}}">{{dom[id].innerText}}</block>
+        </view>
+    </block>
+    <block a:else>
+        <view id="d_{{id}}" class="{{dom[id].class}}" style="{{tools.style(dom[id].s)}};{{style}}">
+            <block a:for="{{dom[id].n}}" a:for-item="item">
+                <template is="{{tools.tag(dom[item].tag)}}" data="{{id: item, dom:dom}}" />
+            </block>
+            <block a:if="{{dom[id].innerText}}">{{dom[id].innerText}}</block>
+        </view>
+    </block>
+    
+</template>
+<!-- floop -->
+
+<template name="catchmove">
+    <block a:if="{{dom[id].click}}">
+        <view id="d_{{id}}" class="{{dom[id].class}}" catchTap="onEvent" catchtouchmove="onEvent" style="{{tools.style(dom[id].s)}}">
+            <block a:for="{{dom[id].n}}" a:for-item="item">
+                <template is="{{tools.tag(dom[item].tag)}}" data="{{id: item, dom:dom}}" />
+            </block>
+        </view>
+    </block>
+    <block a:else>
+         <view id="d_{{id}}" class="{{dom[id].class}}" catchtouchmove="onEvent" style="{{tools.style(dom[id].s)}}">
+            <block a:for="{{dom[id].n}}" a:for-item="item">
+                <template is="{{tools.tag(dom[item].tag)}}" data="{{id: item, dom:dom}}" />
+            </block>
+        </view>
+    </block>
+</template>
+<template name="touchmove">
+    <block a:if="{{dom[id].click}}">
+        <view id="d_{{id}}" class="{{dom[id].class}}" catchTap="onEvent" style="{{tools.style(dom[id].s)}}">
+            <block a:for="{{dom[id].n}}" a:for-item="item">
+                <template is="{{tools.tag(dom[item].tag)}}" data="{{id: item, dom:dom}}" />
+            </block>
+        </view>
+    </block>
+    <block a:else>
+         <view id="d_{{id}}" class="{{dom[id].class}}" catchtouchstart="onEvent" catchtouchmove="onEvent" catchtouchcancel="onEvent" catchtouchend="onEvent" style="{{tools.style(dom[id].s)}}">
+            <block a:for="{{dom[id].n}}" a:for-item="item">
+                <template is="{{tools.tag(dom[item].tag)}}" data="{{id: item, dom:dom}}" />
+            </block>
+        </view>
+    </block>
+</template>
+<template name="img">
+    <image id="d_{{id}}" class="{{dom[id].class}}" style="{{tools.style(dom[id].s)}}" mode="{{dom[id].mode}}" src="{{dom[id].src}}" lazy-load="{{dom[id].lazyLoad}}"></image>
+</template>
+<template name="iframe">
+    <web-view id="d_{{id}}" class="{{dom[id].class}}" style="{{tools.style(dom[id].s)}}" src="{{dom[id].src}}"></web-view>
+</template>
+<template name="video">
+    <video id="d_{{id}}" class="{{dom[id].class}}" style="{{tools.style(dom[id].s)}}" src="{{dom[id].src}}" controls="{{dom[id].controls}}" autoplay="{{dom[id].autoplay}}" loop="{{dom[id].loop}}" muted="{{dom[id].muted}}" poster="{{dom[id].poster}}"></video>
+</template>
+<template name="canvas">
+    <canvas id="d_{{id}}" class="{{dom[id].class}}" style="{{tools.style(dom[id].s)}}" type="2d"></canvas>
+</template>
+<template name="textarea">
+    <textarea id="d_{{id}}" class="{{dom[id].class}}" style="{{tools.style(dom[id].s)}}" value="{{dom[id].value}}" placeholder="{{dom[id].placeholder}}" bindinput="onEvent" bindconfirm="onEvent" type="{{dom[id].type}}" password="{{dom[id].type === 'password'}}" disabled="{{dom[id].readOnly}}" auto-focus="{{dom[id].autoFocus}}"></textarea>
+</template>
+<template name="input">
+    <input id="d_{{id}}" class="{{dom[id].class}}" style="{{tools.style(dom[id].s)}}" value="{{dom[id].value}}" placeholder="{{dom[id].placeholder}}" bindinput="onEvent" bindconfirm="onEvent" type="{{dom[id].type}}" password="{{dom[id].type === 'password'}}" always-embed="true" disabled="{{dom[id].readOnly}}" auto-focus="{{dom[id].autoFocus}}"></input>
+</template>
+<template name="swiper">
+    <swiper id="d_{{id}}" class="{{dom[id].class}}" style="{{tools.style(dom[id].s)}}" vertical="{{dom[id].vertical}}" circular="{{dom[id].circular}}">
+        <block a:for="{{dom[id].n}}" a:for-item="item">
+            <swiper-item>
+                <template is="{{tools.tag(dom[item].tag)}}" data="{{id: item, dom:dom}}" />
+            </swiper-item>
+        </block>
+    </swiper>
+</template>
+<!-- <import src="../../plugins.swan" /> -->

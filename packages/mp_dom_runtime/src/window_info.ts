@@ -7,7 +7,8 @@ export class WindowInfo {
   updateWindowInfo() {
     if (
       MPEnv.platformType === PlatformType.wxMiniProgram ||
-      MPEnv.platformType === PlatformType.swanMiniProgram
+      MPEnv.platformType === PlatformType.swanMiniProgram ||
+      MPEnv.platformType === PlatformType.aliMiniProgram
     ) {
       this.engine.sendMessage(
         JSON.stringify({
@@ -23,8 +24,7 @@ export class WindowInfo {
                   MPEnv.platformScope.getSystemInfoSync().safeArea?.bottom,
               },
             },
-            devicePixelRatio:
-              MPEnv.platformScope.getSystemInfoSync().pixelRatio,
+            devicePixelRatio: MPEnv.platformScope.getSystemInfoSync().pixelRatio,
           },
         })
       );

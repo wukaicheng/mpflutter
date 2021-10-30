@@ -20,9 +20,11 @@ export const WXPage = function (
   selector: string = "#vdom",
   app: WXApp = MPEnv.platformGlobal().app
 ) {
-  if (!(__MP_TARGET_WEAPP__ || __MP_TARGET_SWANAPP__)) return;
+  if (!(__MP_TARGET_WEAPP__ || __MP_TARGET_SWANAPP__ || __MP_TARGET_ALIAPP__)) return;
   return {
-    onLoad(pageOptions: any) {
+    async onLoad(pageOptions: any) {
+      while ((await this.componentReady(selector)) !== true) {}
+      while ((await this.componentReady(selector + "_tm")) !== true) {}
       const document = (this as any).selectComponent(selector).miniDom.document;
       (this as any).document = document;
       document.window = new EventEmitter();
@@ -54,7 +56,7 @@ export const WXPage = function (
       if (finalOptions?.route) {
         finalOptions.route = decodeURIComponent(finalOptions.route);
       }
-
+      
       (this as any).mpPage = new Page(document.body, app.engine, finalOptions, document);
       (this as any).mpPage.isFirst = getCurrentPages().length === 1;
     },
@@ -63,7 +65,8 @@ export const WXPage = function (
         app.router.disposeRoute((this as any).mpPage.viewId);
       }
     },
-    onShow() {
+    async onShow() {
+      while ((await this.componentReady(selector + "_tm")) !== true) {}
       TextMeasurer.activeTextMeasureDocument = (this as any).selectComponent(selector + "_tm").miniDom.document;
       Router.clearBeingPushTimeout();
       Router.beingPush = false;
@@ -85,6 +88,30 @@ export const WXPage = function (
       (this as any).mpPage.onPageScroll(res.scrollTop);
       (this as any).document.window.scrollY = res.scrollTop;
       ((this as any).document.window as EventEmitter).emit("scroll", res.scrollTop);
+    },
+    componentReady(selector: string): Promise<boolean> {
+      return new Promise((res) => {
+        if (typeof (this as any).selectComponent !== "function") {
+          res(false);
+          return;
+        }
+        setTimeout(() => {
+          if ((this as any).selectComponent(selector) === undefined) {
+            res(false);
+          } else {
+            res(true);
+          }
+        }, 100);
+      });
+    },
+    onAliComponent(component: any) {
+      if (typeof (this as any).selectComponent !== "function") {
+        (this as any).$component = {};
+        (this as any).selectComponent = (selector: string) => {
+          return (this as any).$component[selector];
+        };
+      }
+      (this as any).$component["#" + component.props.id] = component;
     },
   };
 };
@@ -128,14 +155,20 @@ class WXRouter extends Router {
     const routeId = message.routeId;
     this.thePushingRouteId = routeId;
     const name = message.name;
-    MPEnv.platformScope.navigateTo({
-      url: this.encodeRelativePath(name, message.params),
-      fail: () => {
-        MPEnv.platformScope.navigateTo({
-          url: this.encodeIndexPath(name, message.params),
-        });
-      },
-    });
+    if (__MP_TARGET_ALIAPP__) {
+      MPEnv.platformScope.navigateTo({
+        url: this.encodeIndexPath(name, message.params),
+      });
+    } else {
+      MPEnv.platformScope.navigateTo({
+        url: this.encodeRelativePath(name, message.params),
+        fail: () => {
+          MPEnv.platformScope.navigateTo({
+            url: this.encodeIndexPath(name, message.params),
+          });
+        },
+      });
+    }
     Router.beingPushTimeout = setTimeout(() => {
       Router.beingPush = false;
     }, 1000);
