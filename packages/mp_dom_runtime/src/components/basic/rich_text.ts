@@ -10,6 +10,7 @@ export class RichText extends ComponentView {
   measureId: number | undefined;
   maxWidth: number | string | undefined;
   maxHeight: number | string | undefined;
+  didAddTapListener = false;
 
   elementType() {
     return "div";
@@ -85,11 +86,12 @@ export class RichText extends ComponentView {
         setDOMAttribute(this.htmlElement, "innerText", children[0].attributes.text);
       }
     }
-    if (children[0].attributes.onTap_el && children[0].attributes.onTap_span) {
-      this.htmlElement.onclick = (e) => {
+    if (children[0].attributes.onTap_el && children[0].attributes.onTap_span && !this.didAddTapListener) {
+      this.didAddTapListener = true;
+      this.htmlElement.addEventListener("click", (e) => {
         this.onClick(children[0].attributes.onTap_el, children[0].attributes.onTap_span);
         if (e) e.stopPropagation();
-      };
+      });
     }
     setDOMStyle(this.htmlElement, style);
   }
@@ -117,6 +119,8 @@ export class RichText extends ComponentView {
 }
 
 export class TextSpan extends ComponentView {
+  didAddTapListener = false;
+
   elementType() {
     return "div";
   }
@@ -149,11 +153,12 @@ export class TextSpan extends ComponentView {
         setDOMAttribute(this.htmlElement, "innerText", attributes.text);
       }
     }
-    if (attributes.onTap_el && attributes.onTap_span) {
-      this.htmlElement.onclick = (e) => {
+    if (attributes.onTap_el && attributes.onTap_span && !this.didAddTapListener) {
+      this.didAddTapListener = true;
+      this.htmlElement.addEventListener("click", (e) => {
         this.onClick();
         if (e) e.stopPropagation();
-      };
+      });
     }
     setDOMStyle(this.htmlElement, style);
   }

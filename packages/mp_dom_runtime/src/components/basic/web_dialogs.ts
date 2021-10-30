@@ -1,6 +1,3 @@
-declare var wx: any;
-declare var swan: any;
-
 import { Engine } from "../../engine";
 import { MPEnv, PlatformType } from "../../env";
 
@@ -8,6 +5,8 @@ export class WebDialogs {
   static receivedWebDialogsMessage(engine: Engine, message: any) {
     if (MPEnv.platformType === PlatformType.wxMiniProgram || MPEnv.platformType === PlatformType.swanMiniProgram) {
       this.wxMiniProgramReceivedWebDialogsMessage(engine, message);
+    } else if (MPEnv.platformType === PlatformType.aliMiniProgram) {
+      this.aliMiniProgramReceivedWebDialogsMessage(engine, message);
     } else {
       this.browserMiniProgramReceivedWebDialogsMessage(engine, message);
     }
@@ -54,7 +53,7 @@ export class WebDialogs {
           content: message["params"]["defaultValue"] ?? "",
           sendText: "确认",
           success: (res: any) => {
-            swan.closeReplyEditor();
+            MPEnv.platformScope.closeReplyEditor();
             if (res.status === "reply") {
               engine.sendMessage(
                 JSON.stringify({
@@ -169,6 +168,87 @@ export class WebDialogs {
       }
       MPEnv.platformScope.showToast(params);
     } else if (message["params"]["dialogType"] === "hideToast") {
+      MPEnv.platformScope.hideToast();
+    }
+  }
+
+  static aliMiniProgramReceivedWebDialogsMessage(engine: Engine, message: any) {
+    if (!__MP_TARGET_ALIAPP__) return;
+    if (message["params"]["dialogType"] === "alert") {
+      MPEnv.platformScope.alert({
+        content: message["params"]["message"],
+        buttonText: "我知道了",
+        success: () => {
+          engine.sendMessage(
+            JSON.stringify({
+              type: "action",
+              message: { event: "callback", id: message["id"] },
+            })
+          );
+        },
+      });
+    } else if (message["params"]["dialogType"] === "confirm") {
+      MPEnv.platformScope.confirm({
+        content: message["params"]["message"],
+        confirmButtonText: "确认",
+        cancelButtonText: "取消",
+        success: (result: any) => {
+          engine.sendMessage(
+            JSON.stringify({
+              type: "action",
+              message: { event: "callback", id: message["id"], data: result.confirm },
+            })
+          );
+        },
+      });
+    } else if (message["params"]["dialogType"] === "prompt") {
+      MPEnv.platformScope.prompt({
+        message: message["params"]["message"],
+        okButtonText: "确定",
+        cancelButtonText: "取消",
+        success: (result: any) => {
+          engine.sendMessage(
+            JSON.stringify({
+              type: "action",
+              message: { event: "callback", id: message["id"], data: result.ok ? result.inputValue : undefined },
+            })
+          );
+        },
+      });
+    } else if (message["params"]["dialogType"] === "actionSheet") {
+      MPEnv.platformScope.showActionSheet({
+        items: message["params"]["items"],
+        cancelButtonText: "取消",
+        success: (res: any) => {
+          engine.sendMessage(
+            JSON.stringify({
+              type: "action",
+              message: {
+                event: "callback",
+                id: message["id"],
+                data: res.index >= 0 ? res.index : undefined,
+              },
+            })
+          );
+        },
+      });
+    } else if (message["params"]["dialogType"] === "showToast") {
+      const method = message["params"]["icon"] === "ToastIcon.loading" ? "showLoading" : "showToast";
+      MPEnv.platformScope[method]({
+        type: (() => {
+          if (message["params"]["icon"] === "ToastIcon.success") {
+            return "success";
+          } else if (message["params"]["icon"] === "ToastIcon.error") {
+            return "fail";
+          } else {
+            return "none";
+          }
+        })(),
+        content: message["params"]["title"],
+        duration: message["params"]["duration"],
+      });
+    } else if (message["params"]["dialogType"] === "hideToast") {
+      MPEnv.platformScope.hideLoading();
       MPEnv.platformScope.hideToast();
     }
   }

@@ -5,7 +5,7 @@
 </block>
 <template name="div">
     <block a:if="{{dom[id].click}}">
-        <view id="d_{{id}}" class="{{dom[id].class}}" catchTap="{{dom[id].click ? 'onEvent' : ''}}" style="{{tools.style(dom[id].s)}};{{style}}">
+        <view id="d_{{id}}" data-id="d_{{id}}" class="{{dom[id].class}}" catchTap="{{dom[id].click ? 'onEvent' : ''}}" style="{{tools.style(dom[id].s)}};{{style}}">
             <block a:for="{{dom[id].n}}" a:for-item="item">
                 <template is="{{tools.tag(dom[item].tag)}}" data="{{id: item, dom:dom}}" />
             </block>
@@ -13,7 +13,7 @@
         </view>
     </block>
     <block a:else>
-        <view id="d_{{id}}" class="{{dom[id].class}}" style="{{tools.style(dom[id].s)}};{{style}}">
+        <view id="d_{{id}}" data-id="d_{{id}}" class="{{dom[id].class}}" style="{{tools.style(dom[id].s)}};{{style}}">
             <block a:for="{{dom[id].n}}" a:for-item="item">
                 <template is="{{tools.tag(dom[item].tag)}}" data="{{id: item, dom:dom}}" />
             </block>
@@ -26,14 +26,14 @@
 
 <template name="catchmove">
     <block a:if="{{dom[id].click}}">
-        <view id="d_{{id}}" class="{{dom[id].class}}" catchTap="onEvent" catchtouchmove="onEvent" style="{{tools.style(dom[id].s)}}">
+        <view id="d_{{id}}" data-id="d_{{id}}" class="{{dom[id].class}}" catchTap="onEvent" catchtouchmove="onEvent" style="{{tools.style(dom[id].s)}}">
             <block a:for="{{dom[id].n}}" a:for-item="item">
                 <template is="{{tools.tag(dom[item].tag)}}" data="{{id: item, dom:dom}}" />
             </block>
         </view>
     </block>
     <block a:else>
-         <view id="d_{{id}}" class="{{dom[id].class}}" catchtouchmove="onEvent" style="{{tools.style(dom[id].s)}}">
+         <view id="d_{{id}}" data-id="d_{{id}}" class="{{dom[id].class}}" catchtouchmove="onEvent" style="{{tools.style(dom[id].s)}}">
             <block a:for="{{dom[id].n}}" a:for-item="item">
                 <template is="{{tools.tag(dom[item].tag)}}" data="{{id: item, dom:dom}}" />
             </block>
@@ -42,14 +42,14 @@
 </template>
 <template name="touchmove">
     <block a:if="{{dom[id].click}}">
-        <view id="d_{{id}}" class="{{dom[id].class}}" catchTap="onEvent" style="{{tools.style(dom[id].s)}}">
+        <view id="d_{{id}}" data-id="d_{{id}}" class="{{dom[id].class}}" catchTap="onEvent" style="{{tools.style(dom[id].s)}}">
             <block a:for="{{dom[id].n}}" a:for-item="item">
                 <template is="{{tools.tag(dom[item].tag)}}" data="{{id: item, dom:dom}}" />
             </block>
         </view>
     </block>
     <block a:else>
-         <view id="d_{{id}}" class="{{dom[id].class}}" catchtouchstart="onEvent" catchtouchmove="onEvent" catchtouchcancel="onEvent" catchtouchend="onEvent" style="{{tools.style(dom[id].s)}}">
+         <view id="d_{{id}}" data-id="d_{{id}}" class="{{dom[id].class}}" catchtouchstart="onEvent" catchtouchmove="onEvent" catchtouchcancel="onEvent" catchtouchend="onEvent" style="{{tools.style(dom[id].s)}}">
             <block a:for="{{dom[id].n}}" a:for-item="item">
                 <template is="{{tools.tag(dom[item].tag)}}" data="{{id: item, dom:dom}}" />
             </block>
@@ -57,25 +57,25 @@
     </block>
 </template>
 <template name="img">
-    <image id="d_{{id}}" class="{{dom[id].class}}" style="{{tools.style(dom[id].s)}}" mode="{{dom[id].mode}}" src="{{dom[id].src}}" lazy-load="{{dom[id].lazyLoad}}"></image>
+    <image id="d_{{id}}" data-id="d_{{id}}" class="{{dom[id].class}}" style="{{tools.style(dom[id].s)}}" mode="{{dom[id].mode}}" src="{{dom[id].src}}" lazy-load="{{dom[id].lazyLoad}}"></image>
 </template>
 <template name="iframe">
-    <web-view id="d_{{id}}" class="{{dom[id].class}}" style="{{tools.style(dom[id].s)}}" src="{{dom[id].src}}"></web-view>
+    <web-view id="d_{{id}}" data-id="d_{{id}}" class="{{dom[id].class}}" style="{{tools.style(dom[id].s)}}" src="{{dom[id].src}}"></web-view>
 </template>
 <template name="video">
-    <video id="d_{{id}}" class="{{dom[id].class}}" style="{{tools.style(dom[id].s)}}" src="{{dom[id].src}}" controls="{{dom[id].controls}}" autoplay="{{dom[id].autoplay}}" loop="{{dom[id].loop}}" muted="{{dom[id].muted}}" poster="{{dom[id].poster}}"></video>
+    <video id="d_{{id}}" data-id="d_{{id}}" class="{{dom[id].class}}" style="{{tools.style(dom[id].s)}}" src="{{dom[id].src}}" controls="{{dom[id].controls}}" autoplay="{{dom[id].autoplay}}" loop="{{dom[id].loop}}" muted="{{dom[id].muted}}" poster="{{dom[id].poster}}"></video>
 </template>
 <template name="canvas">
-    <canvas id="d_{{id}}" class="{{dom[id].class}}" style="{{tools.style(dom[id].s)}}" type="2d"></canvas>
+    <canvas id="d_{{id}}" data-id="d_{{id}}" class="{{dom[id].class}}" style="{{tools.style(dom[id].s)}}" type="2d"></canvas>
 </template>
 <template name="textarea">
-    <textarea id="d_{{id}}" class="{{dom[id].class}}" style="{{tools.style(dom[id].s)}}" value="{{dom[id].value}}" placeholder="{{dom[id].placeholder}}" bindinput="onEvent" bindconfirm="onEvent" type="{{dom[id].type}}" password="{{dom[id].type === 'password'}}" disabled="{{dom[id].readOnly}}" auto-focus="{{dom[id].autoFocus}}"></textarea>
+    <textarea id="d_{{id}}" data-id="d_{{id}}" class="{{dom[id].class}}" style="{{tools.style(dom[id].s)}}" value="{{dom[id].value}}" placeholder="{{dom[id].placeholder}}" onInput="onEvent" onConfirm="onEvent" type="{{dom[id].type}}" password="{{dom[id].type === 'password'}}" disabled="{{dom[id].readOnly}}" auto-focus="{{dom[id].autoFocus}}" enableNative="{{false}}"></textarea>
 </template>
 <template name="input">
-    <input id="d_{{id}}" class="{{dom[id].class}}" style="{{tools.style(dom[id].s)}}" value="{{dom[id].value}}" placeholder="{{dom[id].placeholder}}" bindinput="onEvent" bindconfirm="onEvent" type="{{dom[id].type}}" password="{{dom[id].type === 'password'}}" always-embed="true" disabled="{{dom[id].readOnly}}" auto-focus="{{dom[id].autoFocus}}"></input>
+    <input id="d_{{id}}" data-id="d_{{id}}" class="{{dom[id].class}}" style="{{tools.style(dom[id].s)}}" value="{{dom[id].value}}" placeholder="{{dom[id].placeholder}}" onInput="onEvent" onConfirm="onEvent" type="{{dom[id].type}}" password="{{dom[id].type === 'password'}}" always-embed="true" disabled="{{dom[id].readOnly}}" auto-focus="{{dom[id].autoFocus}}" enableNative="{{false}}"></input>
 </template>
 <template name="swiper">
-    <swiper id="d_{{id}}" class="{{dom[id].class}}" style="{{tools.style(dom[id].s)}}" vertical="{{dom[id].vertical}}" circular="{{dom[id].circular}}">
+    <swiper id="d_{{id}}" data-id="d_{{id}}" class="{{dom[id].class}}" style="{{tools.style(dom[id].s)}}" vertical="{{dom[id].vertical}}" circular="{{dom[id].circular}}">
         <block a:for="{{dom[id].n}}" a:for-item="item">
             <swiper-item>
                 <template is="{{tools.tag(dom[item].tag)}}" data="{{id: item, dom:dom}}" />

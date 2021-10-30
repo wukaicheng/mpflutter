@@ -97,9 +97,10 @@ export class Page {
         if (scaffoldView instanceof MPScaffold && !scaffoldView.delegate) {
           if (
             MPEnv.platformType === PlatformType.wxMiniProgram ||
-            MPEnv.platformType === PlatformType.swanMiniProgram
+            MPEnv.platformType === PlatformType.swanMiniProgram ||
+            MPEnv.platformType === PlatformType.aliMiniProgram
           ) {
-            if (__MP_TARGET_WEAPP__ || __MP_TARGET_SWANAPP__) {
+            if (__MP_TARGET_WEAPP__ || __MP_TARGET_SWANAPP__ || __MP_TARGET_ALIAPP__) {
               scaffoldView.setDelegate(new WXPageScaffoldDelegate(this.document));
               scaffoldView.setAttributes(message.scaffold.attributes);
             }
@@ -229,7 +230,12 @@ class WXPageScaffoldDelegate implements MPScaffoldDelegate {
 
   setPageTitle(title: string): void {
     if (MPEnv.platformType == PlatformType.wxMiniProgram && title === this.currentTitle) return;
-    MPEnv.platformScope.setNavigationBarTitle({ title });
+    if (MPEnv.platformScope.setNavigationBarTitle) {
+      MPEnv.platformScope.setNavigationBarTitle({ title });
+    } else if (MPEnv.platformScope.setNavigationBar) {
+      MPEnv.platformScope.setNavigationBar({ title });
+    }
+
     this.currentTitle = title;
   }
 
@@ -253,9 +259,15 @@ class WXPageScaffoldDelegate implements MPScaffoldDelegate {
   }
 
   setAppBarColor(color: string, tintColor?: string): void {
-    MPEnv.platformScope.setNavigationBarColor({
-      backgroundColor: color,
-      frontColor: tintColor,
-    });
+    if (MPEnv.platformScope.setNavigationBarColor) {
+      MPEnv.platformScope.setNavigationBarColor({
+        backgroundColor: color,
+        frontColor: tintColor,
+      });
+    } else if (MPEnv.platformScope.setNavigationBar) {
+      MPEnv.platformScope.setNavigationBar({
+        backgroundColor: color,
+      });
+    }
   }
 }

@@ -198,9 +198,9 @@ class _Element extends EventEmitter {
   }
 
   getBoundingClientRect() {
-    // if (this.class) {
-    //   return this.getBoundingClientRectWithClass();
-    // }
+    if (this.classList.value.length > 0) {
+      return this.getBoundingClientRectWithClass();
+    }
 
     return new Promise((res) => {
       my.createSelectorQuery()
@@ -223,25 +223,24 @@ class _Element extends EventEmitter {
   }
 
   getBoundingClientRectWithClass() {
-    if (!_Element.classBoundingClientRectQuery[this.class]) {
-      _Element.classBoundingClientRectQuery[this.class] = my
+    let className = this.classList.value[0];
+    if (!_Element.classBoundingClientRectQuery[className]) {
+      _Element.classBoundingClientRectQuery[className] = my
         .createSelectorQuery()
-        .in(this.controller.componentInstance)
-        .selectAll("." + this.class)
-        .boundingClientRect((result) => {
-          if (result instanceof Array) {
-            result.forEach((it) => {
-              _Element.classBoundingClientRectCallback[it.id]?.({
-                width: it.width,
-                height: it.height,
-              });
-              delete _Element.classBoundingClientRectCallback[it.id];
+        .selectAll("." + className)
+        .fields({ id: true, dataset: true, size: true, rect: true });
+      setTimeout(() => {
+        _Element.classBoundingClientRectQuery[className].exec((result) => {
+          for (let index = 0; index < result[0].length; index++) {
+            const it = result[0][index];
+            _Element.classBoundingClientRectCallback[it.dataset.id]?.({
+              width: it.width,
+              height: it.height,
             });
+            delete _Element.classBoundingClientRectCallback[it.dataset.id];
           }
         });
-      setTimeout(() => {
-        _Element.classBoundingClientRectQuery[this.class].exec();
-        delete _Element.classBoundingClientRectQuery[this.class];
+        delete _Element.classBoundingClientRectQuery[className];
       }, 16);
     }
     return new Promise((res) => {
