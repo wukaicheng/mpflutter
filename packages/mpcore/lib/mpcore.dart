@@ -235,7 +235,7 @@ class MPCore {
           return false;
         });
         if (BuildOwner.beingMeasureElements.isEmpty) break;
-        await sendTextMeasureFrame();
+        await sendTextMeasureFrame().timeout(Duration(seconds: 5));
         WidgetsBinding.instance!.scheduleFrame();
         await nextFrame();
         // ignore: empty_catches

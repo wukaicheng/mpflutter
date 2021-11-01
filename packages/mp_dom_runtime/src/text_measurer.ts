@@ -6,7 +6,7 @@ import { MPEnv, PlatformType } from "./env";
 import { Router } from "./router";
 
 export class TextMeasurer {
-  static activeTextMeasureDocument: Document;
+  static activeTextMeasureDocument: Document | undefined;
 
   static async delay() {
     return new Promise((res) => {
@@ -34,7 +34,7 @@ export class TextMeasurer {
 
       const views = items
         .map((it: any) => {
-          return engine.componentFactory.create(it, this.activeTextMeasureDocument);
+          return engine.componentFactory.create(it, this.activeTextMeasureDocument!);
         })
         .filter((it: any) => it) as ComponentView[];
       ComponentFactory.disableCache = false;
@@ -63,7 +63,7 @@ export class TextMeasurer {
                 ? it.attributes?.maxHeight + "px"
                 : "999999px",
           });
-          this.activeTextMeasureDocument.body.appendChild(it.htmlElement);
+          this.activeTextMeasureDocument!.body.appendChild(it.htmlElement);
           if (
             MPEnv.platformType === PlatformType.wxMiniProgram ||
             MPEnv.platformType === PlatformType.swanMiniProgram ||

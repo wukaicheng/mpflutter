@@ -136,8 +136,6 @@ export class Page {
   }
 
   onReachBottom() {
-    console.log("onReachBottom");
-    
     if (this.scaffoldView instanceof MPScaffold) {
       this.scaffoldView.onReachBottom();
     }

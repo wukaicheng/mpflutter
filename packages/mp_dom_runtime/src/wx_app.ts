@@ -56,7 +56,7 @@ export const WXPage = function (
       if (finalOptions?.route) {
         finalOptions.route = decodeURIComponent(finalOptions.route);
       }
-      
+
       (this as any).mpPage = new Page(document.body, app.engine, finalOptions, document);
       (this as any).mpPage.isFirst = getCurrentPages().length === 1;
     },
@@ -70,6 +70,9 @@ export const WXPage = function (
       TextMeasurer.activeTextMeasureDocument = (this as any).selectComponent(selector + "_tm").miniDom.document;
       Router.clearBeingPushTimeout();
       Router.beingPush = false;
+    },
+    onHide() {
+      TextMeasurer.activeTextMeasureDocument = undefined;
     },
     onPullDownRefresh() {
       (this as any).mpPage.onRefresh().then((it: any) => {

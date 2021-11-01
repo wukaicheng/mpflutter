@@ -451,6 +451,7 @@ class MPChannelBase {
                 message['viewport']['height'];
           }
           routeScaffoldStateMap[routeId]?.refreshState();
+          MPCore.cancelTextMeasureTask('refreshRouteState');
         }
       } else if (message['event'] == 'disposeRoute') {
         final routeId = message['routeId'];
