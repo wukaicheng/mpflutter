@@ -26,14 +26,14 @@
 
 <template name="catchmove">
     <block a:if="{{dom[id].click}}">
-        <view id="d_{{id}}" data-id="d_{{id}}" class="{{dom[id].class}}" catchTap="onEvent" catchtouchmove="onEvent" style="{{tools.style(dom[id].s)}}">
+        <view id="d_{{id}}" data-id="d_{{id}}" class="{{dom[id].class}}" catchTap="onEvent" catchTouchMove="onEvent" style="{{tools.style(dom[id].s)}}">
             <block a:for="{{dom[id].n}}" a:for-item="item">
                 <template is="{{tools.tag(dom[item].tag)}}" data="{{id: item, dom:dom}}" />
             </block>
         </view>
     </block>
     <block a:else>
-         <view id="d_{{id}}" data-id="d_{{id}}" class="{{dom[id].class}}" catchtouchmove="onEvent" style="{{tools.style(dom[id].s)}}">
+         <view id="d_{{id}}" data-id="d_{{id}}" class="{{dom[id].class}}" catchTouchMove="onEvent" style="{{tools.style(dom[id].s)}}">
             <block a:for="{{dom[id].n}}" a:for-item="item">
                 <template is="{{tools.tag(dom[item].tag)}}" data="{{id: item, dom:dom}}" />
             </block>
@@ -49,7 +49,7 @@
         </view>
     </block>
     <block a:else>
-         <view id="d_{{id}}" data-id="d_{{id}}" class="{{dom[id].class}}" catchtouchstart="onEvent" catchtouchmove="onEvent" catchtouchcancel="onEvent" catchtouchend="onEvent" style="{{tools.style(dom[id].s)}}">
+         <view id="d_{{id}}" data-id="d_{{id}}" class="{{dom[id].class}}" catchTouchStart="onEvent" catchTouchMove="onEvent" catchTouchCancel="onEvent" catchTouchEnd="onEvent" style="{{tools.style(dom[id].s)}}">
             <block a:for="{{dom[id].n}}" a:for-item="item">
                 <template is="{{tools.tag(dom[item].tag)}}" data="{{id: item, dom:dom}}" />
             </block>

@@ -9,6 +9,6 @@ try {
   require("./plugins.min");
 } catch (error) { }
 const engine = new Engine();
-engine.initWithDebuggerServerAddr("10.0.1.69:9898");
+engine.initWithDebuggerServerAddr("192.168.1.37:9898");
 const app = new WXApp("pages/index/index", engine);
 MPEnv.platformAppInstance.app = app;

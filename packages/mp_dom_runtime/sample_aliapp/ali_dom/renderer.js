@@ -1,6 +1,10 @@
 let eventMap = {
     tap: "click",
     confirm: "submit",
+    touchStart: "touchstart",
+    touchMove: "touchmove",
+    touchEnd: "touchend",
+    touchCancel: "touchcancel",
 };
 Component({
     properties: {

@@ -64,7 +64,11 @@ export class GestureDetector extends ComponentView {
       if (!this.didSetOnLongPressOrPan) {
         this.didSetOnLongPressOrPan = true;
         this.setupLongPressOrPanCatcher();
-        if (MPEnv.platformType === PlatformType.wxMiniProgram || MPEnv.platformType === PlatformType.swanMiniProgram) {
+        if (
+          MPEnv.platformType === PlatformType.wxMiniProgram ||
+          MPEnv.platformType === PlatformType.swanMiniProgram ||
+          MPEnv.platformType === PlatformType.aliMiniProgram
+        ) {
           (this.htmlElement as any).setTag("touchmove");
         }
       }

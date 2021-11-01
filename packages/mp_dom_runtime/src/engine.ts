@@ -1,5 +1,6 @@
 declare var require: any;
 declare var wx: any;
+declare var my: any;
 declare var swan: any;
 
 import { BrowserApp } from "./browser_app";
@@ -101,6 +102,10 @@ export class Engine {
       if (typeof swan !== "undefined") {
         MPEnv.platformGlobal().swan = swan;
         MPEnv.platformGlobal().uni = swan;
+      }
+      if (typeof my !== "undefined") {
+        MPEnv.platformGlobal().my = my;
+        MPEnv.platformGlobal().uni = my;
       }
     }
     if (this.debugger) {
