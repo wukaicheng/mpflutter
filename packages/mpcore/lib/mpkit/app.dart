@@ -19,17 +19,14 @@ class MPApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WidgetsApp(
+    return MaterialApp(
       title: title ?? '',
-      color: color ?? Color(0),
+      color: color ?? Colors.blue,
       builder: (context, widget) {
         return widget ?? Container();
       },
       routes: routes,
       navigatorObservers: navigatorObservers,
-      pageRouteBuilder: <T>(RouteSettings settings, WidgetBuilder builder) {
-        return MPPageRoute<T>(settings: settings, builder: builder);
-      },
       onGenerateRoute: (settings) {
         return onGenerateRoute?.call(settings) ??
             MPPageRoute(builder: (context) {

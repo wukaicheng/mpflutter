@@ -1,7 +1,7 @@
 part of 'mpkit.dart';
 
 class MPIcon extends StatelessWidget {
-  final String iconUrl;
+  final IconData iconUrl;
   final double size;
   final Color color;
 
@@ -9,10 +9,6 @@ class MPIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: size,
-      height: size,
-      color: Colors.transparent,
-    );
+    return Icon(iconUrl, size: size, color: color);
   }
 }

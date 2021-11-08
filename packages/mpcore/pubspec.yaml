@@ -9,16 +9,8 @@ environment:
 
 dependencies:
   flutter: 
-    git: 
-      url: https://github.com/mpflutter/mpflutter
-      path: packages/flutter
-  json_patch: ^2.1.0
-  vm_service: ^6.2.0
-  watcher: ^1.0.0
-  glob: ^2.0.1
-  mime_type: ^1.0.0
-  path: ^1.8.0
+    sdk: flutter
 
 dependency_overrides:
   flutter: 
-    path: ../flutter
+    sdk: flutter
