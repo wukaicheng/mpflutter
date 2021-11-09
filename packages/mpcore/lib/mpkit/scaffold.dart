@@ -45,8 +45,53 @@ class MPScaffoldState extends State<MPScaffold> {
     setState(() {});
   }
 
+  Widget renderRefreshIndicator(Widget child) {
+    return RefreshIndicator(
+      child: child,
+      onRefresh: () async {
+        await widget.onRefresh?.call();
+      },
+    );
+  }
+
+  Widget renderReachBottomListener(Widget child) {
+    return NotificationListener<ScrollNotification>(
+      onNotification: (e) {
+        if (e.metrics.atEdge && e.metrics.pixels > 0) {
+          widget.onReachBottom?.call();
+        }
+        return false;
+      },
+      child: child,
+    );
+  }
+
+  Widget renderOnPageScrollListener(Widget child) {
+    return NotificationListener<ScrollNotification>(
+      onNotification: (e) {
+        widget.onPageScroll?.call(e.metrics.pixels);
+        return false;
+      },
+      child: child,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    var body = widget.body ?? Container();
+    if (widget.onReachBottom != null) {
+      body = renderReachBottomListener(body);
+    }
+    if (widget.onPageScroll != null) {
+      body = renderOnPageScrollListener(body);
+    }
+    if (widget.onRefresh != null) {
+      body = renderRefreshIndicator(body);
+    }
+    if (widget.floatingBody != null) {
+      body =
+          Stack(children: [Positioned.fill(child: body), widget.floatingBody!]);
+    }
     return Scaffold(
       appBar: (() {
         if (widget.appBar != null) {
@@ -60,7 +105,7 @@ class MPScaffoldState extends State<MPScaffold> {
         }
       })(),
       backgroundColor: widget.backgroundColor,
-      body: widget.body,
+      body: body,
       bottomNavigationBar: widget.bottomBar,
     );
   }

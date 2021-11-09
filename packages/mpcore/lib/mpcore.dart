@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
+import 'package:mpcore/mpkit/mpkit.dart';
 import 'channel/channel_io.dart'
     if (dart.library.js) './channel/channel_js.dart';
 
@@ -14,6 +15,7 @@ export './wechat_miniprogram/wechat_miniprogram.dart';
 part 'document.dart';
 part 'plugin.dart';
 part './channel/channel_base.dart';
+part './components/web_dialogs.dart';
 
 class MPCore {
   static NavigatorObserver getNavigationObserver() {

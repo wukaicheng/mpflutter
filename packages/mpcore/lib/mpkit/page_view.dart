@@ -13,9 +13,12 @@ class MPPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children:
-          children.map((e) => Positioned.fill(child: MPPageItem(e))).toList(),
+    return PageView.builder(
+      scrollDirection: scrollDirection,
+      itemBuilder: (context, index) {
+        return MPPageItem(children[index % children.length]);
+      },
+      itemCount: loop ? null : children.length,
     );
   }
 }
