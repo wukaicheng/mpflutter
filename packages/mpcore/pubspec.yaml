@@ -10,6 +10,7 @@ environment:
 dependencies:
   flutter: 
     sdk: flutter
+  waterfall_flow: ^3.0.1
 
 dependency_overrides:
   flutter: 

@@ -1,6 +1,6 @@
 part of 'mpkit.dart';
 
-class WaterfallView extends GridView {
+class WaterfallView extends waterfall_flow.WaterfallFlow {
   WaterfallView({
     Key? key,
     Axis scrollDirection = Axis.vertical,
@@ -44,7 +44,7 @@ class WaterfallView extends GridView {
           restorationId: restorationId,
         );
 
-  static GridView builder({
+  static Widget builder({
     Key? key,
     Axis scrollDirection = Axis.vertical,
     bool reverse = false,
@@ -67,7 +67,7 @@ class WaterfallView extends GridView {
     String? restorationId,
     Clip clipBehavior = Clip.hardEdge,
   }) {
-    return GridView.builder(
+    return waterfall_flow.WaterfallFlow.builder(
       key: key,
       scrollDirection: scrollDirection,
       reverse: reverse,
@@ -91,7 +91,7 @@ class WaterfallView extends GridView {
     );
   }
 
-  static GridView custom({
+  static Widget custom({
     Key? key,
     Axis scrollDirection = Axis.vertical,
     bool reverse = false,
@@ -110,7 +110,7 @@ class WaterfallView extends GridView {
     String? restorationId,
     Clip clipBehavior = Clip.hardEdge,
   }) {
-    return GridView.custom(
+    return waterfall_flow.WaterfallFlow.custom(
       key: key,
       scrollDirection: scrollDirection,
       reverse: reverse,
@@ -130,7 +130,7 @@ class WaterfallView extends GridView {
     );
   }
 
-  static GridView count({
+  static Widget count({
     Key? key,
     Axis scrollDirection = Axis.vertical,
     bool reverse = false,
@@ -155,7 +155,7 @@ class WaterfallView extends GridView {
     String? restorationId,
     Clip clipBehavior = Clip.hardEdge,
   }) {
-    return GridView.count(
+    return waterfall_flow.WaterfallFlow.count(
       key: key,
       scrollDirection: scrollDirection,
       reverse: reverse,
@@ -167,7 +167,6 @@ class WaterfallView extends GridView {
       crossAxisCount: crossAxisCount,
       mainAxisSpacing: mainAxisSpacing,
       crossAxisSpacing: crossAxisSpacing,
-      childAspectRatio: childAspectRatio,
       addAutomaticKeepAlives: addAutomaticKeepAlives,
       addRepaintBoundaries: addRepaintBoundaries,
       addSemanticIndexes: addSemanticIndexes,
@@ -182,11 +181,11 @@ class WaterfallView extends GridView {
   }
 }
 
-class SliverWaterfall extends SliverGrid {
+class SliverWaterfall extends waterfall_flow.SliverWaterfallFlow {
   const SliverWaterfall({
     Key? key,
     required SliverChildDelegate delegate,
-    required SliverGridDelegate gridDelegate,
+    required SliverWaterfallDelegate gridDelegate,
   }) : super(key: key, delegate: delegate, gridDelegate: gridDelegate);
 
   SliverWaterfall.count({
@@ -207,7 +206,7 @@ class SliverWaterfall extends SliverGrid {
 }
 
 class SliverWaterfallDelegate
-    extends SliverGridDelegateWithFixedCrossAxisCount {
+    extends waterfall_flow.SliverWaterfallFlowDelegateWithFixedCrossAxisCount {
   const SliverWaterfallDelegate({
     required int crossAxisCount,
     double mainAxisSpacing = 0.0,
@@ -216,59 +215,5 @@ class SliverWaterfallDelegate
           crossAxisCount: crossAxisCount,
           mainAxisSpacing: mainAxisSpacing,
           crossAxisSpacing: crossAxisSpacing,
-          childAspectRatio: 1.0,
         );
-
-  @override
-  SliverGridLayout getLayout(SliverConstraints constraints) {
-    final usableCrossAxisExtent = math.max(0.0,
-        constraints.crossAxisExtent - crossAxisSpacing * (crossAxisCount - 1));
-    final childCrossAxisExtent = usableCrossAxisExtent / crossAxisCount;
-    return _SliverWaterfallLayout(childCrossAxisExtent: childCrossAxisExtent);
-  }
-}
-
-class _SliverWaterfallLayout extends SliverGridLayout {
-  final double childCrossAxisExtent;
-
-  const _SliverWaterfallLayout({
-    this.childCrossAxisExtent = 2,
-  });
-
-  @override
-  double computeMaxScrollOffset(int childCount) {
-    return 1000.0 * childCount;
-  }
-
-  @override
-  SliverGridGeometry getGeometryForChildIndex(int index) {
-    return _SliverWaterfallGridGeometry(childCrossAxisExtent);
-  }
-
-  @override
-  int getMaxChildIndexForScrollOffset(double scrollOffset) {
-    return 100000;
-  }
-
-  @override
-  int getMinChildIndexForScrollOffset(double scrollOffset) {
-    return 0;
-  }
-}
-
-class _SliverWaterfallGridGeometry extends SliverGridGeometry {
-  _SliverWaterfallGridGeometry(double crossAxisExtent)
-      : super(
-            scrollOffset: 0,
-            crossAxisExtent: crossAxisExtent,
-            mainAxisExtent: 0,
-            crossAxisOffset: 0);
-
-  @override
-  BoxConstraints getBoxConstraints(SliverConstraints constraints) {
-    return constraints.asBoxConstraints(
-      minExtent: mainAxisExtent,
-      crossAxisExtent: crossAxisExtent,
-    );
-  }
 }
