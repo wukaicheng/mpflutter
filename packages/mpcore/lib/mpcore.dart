@@ -6,6 +6,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/material_adapter.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/ui/src/mock_engine/device_info.dart';
 import 'package:flutter/ui/ui.dart' as ui;
@@ -67,7 +68,16 @@ class MPCore {
   final Set<int> _diffableElements = {};
   final Map<int, Element> _renderObjectMapElement = {};
 
+  void setupMaterialAdapter() {
+    MaterialAdapter.scaffoldBuilder = (context, widget) {
+      return MPScaffold(
+        body: widget.body,
+      );
+    };
+  }
+
   void connectToHostChannel() async {
+    setupMaterialAdapter();
     if (kReleaseMode) {
       injectErrorWidget();
       injectMethodChannelHandler();
