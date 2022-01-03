@@ -6,14 +6,23 @@ import { MPEnv } from "./env";
 import { Page } from "./page";
 import { Router } from "./router";
 import { TextMeasurer } from "./text_measurer";
-import EventEmitter from "eventemitter3";
+
+let usingComponentsConfig = {};
+try {
+  const indexJSON = require('mp-custom-components');
+  if (indexJSON.usingComponents) {
+    usingComponentsConfig = indexJSON.usingComponents;
+  }
+} catch (error) {
+  console.error(error);
+}
 
 const kboneConfig = {
   router: {},
   runtime: {
     subpackagesMap: {},
     tabBarMap: {},
-    usingComponents: {},
+    usingComponents: usingComponentsConfig,
   },
   pages: {
     index: {},
@@ -96,6 +105,7 @@ export const WXPage = function (
       }
       if (finalOptions?.route) {
         finalOptions.route = decodeURIComponent(finalOptions.route);
+        finalOptions.params = { ...pageOptions };
       }
 
       (this as any).mpPage = new Page(document.body, app.engine, finalOptions, document);
@@ -145,9 +155,9 @@ class WXRouter extends Router {
       }
     }
     if (searchParams.length > 0) {
-      return `${name.indexOf("/") === 0 ? name.substr(1) : name}?${searchParams.join("&")}`;
+      return `${name}?${searchParams.join("&")}`;
     } else {
-      return `${name.indexOf("/") === 0 ? name.substr(1) : name}`;
+      return `${name}`;
     }
   }
 
@@ -207,12 +217,30 @@ class WXRouter extends Router {
     }, 1000);
   }
 
-  didPop() {
+  async didPop() {
+    if (Router.beingPush) {
+      await this.delayPop();
+    }
     Router.clearBeingPushTimeout();
     Router.beingPush = true;
     MPEnv.platformScope.navigateBack();
     Router.beingPushTimeout = setTimeout(() => {
       Router.beingPush = false;
     }, 1000);
+  }
+
+  delayPop() {
+    if (
+      __MP_TARGET_WEAPP__ &&
+      (MPEnv.platformScope.getSystemInfoSync().platform === "ios" ||
+        MPEnv.platformScope.getSystemInfoSync().platform === "windows" ||
+        MPEnv.platformScope.getSystemInfoSync().platform === "mac")
+    ) {
+      return new Promise((res) => {
+        setTimeout(() => {
+          res(null);
+        }, 500);
+      });
+    }
   }
 }

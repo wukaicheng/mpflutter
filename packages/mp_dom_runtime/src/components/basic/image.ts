@@ -47,7 +47,7 @@ export class Image extends ComponentView {
     });
     if (
       attributes.fit &&
-      (MPEnv.platformType === PlatformType.wxMiniProgram || MPEnv.platformType === PlatformType.swanMiniProgram)
+      (__MP_TARGET_WEAPP__ || __MP_TARGET_SWANAPP__)
     ) {
       setDOMAttribute(
         this.htmlElement,
@@ -73,13 +73,13 @@ export class Image extends ComponentView {
     }
     if (attributes.src) {
       if (attributes.lazyLoad) {
-        if (MPEnv.platformType === PlatformType.browser) {
+        if (__MP_TARGET_BROWSER__) {
           this.htmlElement.classList.add("lazyload");
           setDOMAttribute(this.htmlElement, "data-src", attributes.src);
           lazyload([this.htmlElement]);
         } else if (
-          MPEnv.platformType === PlatformType.wxMiniProgram ||
-          MPEnv.platformType === PlatformType.swanMiniProgram
+          __MP_TARGET_WEAPP__ ||
+          __MP_TARGET_SWANAPP__
         ) {
           setDOMAttribute(this.htmlElement, "lazyLoad", "true");
           setDOMAttribute(this.htmlElement, "src", attributes.src);
@@ -89,6 +89,8 @@ export class Image extends ComponentView {
       } else {
         setDOMAttribute(this.htmlElement, "src", attributes.src);
       }
+    } else if (attributes.base64) {
+      setDOMAttribute(this.htmlElement, "src", "data:image/png;base64," + attributes.base64);
     } else if (attributes.assetName) {
       if (this.engine.debugger) {
         const assetUrl = (() => {
@@ -107,7 +109,7 @@ export class Image extends ComponentView {
             return `assets/${attributes.assetName}`;
           }
         })();
-        if (MPEnv.platformType === PlatformType.wxMiniProgram || MPEnv.platformType === PlatformType.swanMiniProgram) {
+        if (__MP_TARGET_WEAPP__ || __MP_TARGET_SWANAPP__) {
           assetUrl = "/" + assetUrl;
         }
         setDOMAttribute(this.htmlElement, "src", assetUrl);

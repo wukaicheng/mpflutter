@@ -136,6 +136,8 @@ class MPChannelBase {
         MPChannelBase.onScaffoldTrigger(obj['message']);
       } else if (obj['type'] == 'decode_drawable') {
         MPChannelBase.onDecodeDrawable(obj['message']);
+      } else if (obj['type'] == 'custom_paint') {
+        MPChannelBase.onCustomPaint(obj['message']);
       } else if (obj['type'] == 'router') {
         MPChannelBase.onRouterTrigger(obj['message']);
       } else if (obj['type'] == 'editable_text') {
@@ -146,6 +148,8 @@ class MPChannelBase {
         mpjs.JsBridgeInvoker.instance.makeResponse(obj['message']);
       } else if (obj['type'] == 'platform_view') {
         MPChannelBase.onPlatformViewTrigger(obj['message']);
+      } else if (obj['type'] == 'platform_channel') {
+        _PlatformChannelIO.onPlatformChannelTrigger(obj['message']);
       } else if (obj['type'] == 'scroll_view') {
         MPChannelBase.onScrollViewTrigger(obj['message']);
       } else {
@@ -196,12 +200,20 @@ class MPChannelBase {
             (message['globalX'] as num).toDouble(),
             (message['globalY'] as num).toDouble(),
           ),
+          localPosition: Offset(
+            (message['localX'] as num).toDouble(),
+            (message['localY'] as num).toDouble(),
+          ),
         ));
       } else if (message['event'] == 'onLongPressMoveUpdate') {
         widget.onLongPressMoveUpdate?.call(LongPressMoveUpdateDetails(
           globalPosition: Offset(
             (message['globalX'] as num).toDouble(),
             (message['globalY'] as num).toDouble(),
+          ),
+          localPosition: Offset(
+            (message['localX'] as num).toDouble(),
+            (message['localY'] as num).toDouble(),
           ),
         ));
       } else if (message['event'] == 'onLongPressEnd') {
@@ -212,12 +224,20 @@ class MPChannelBase {
             (message['globalX'] as num).toDouble(),
             (message['globalY'] as num).toDouble(),
           ),
+          localPosition: Offset(
+            (message['localX'] as num).toDouble(),
+            (message['localY'] as num).toDouble(),
+          ),
         ));
       } else if (message['event'] == 'onPanUpdate') {
         widget.onPanUpdate?.call(DragUpdateDetails(
           globalPosition: Offset(
             (message['globalX'] as num).toDouble(),
             (message['globalY'] as num).toDouble(),
+          ),
+          localPosition: Offset(
+            (message['localX'] as num).toDouble(),
+            (message['localY'] as num).toDouble(),
           ),
         ));
       } else if (message['event'] == 'onPanEnd') {
@@ -230,10 +250,18 @@ class MPChannelBase {
 
   static void onOverlayTrigger(Map message) {
     try {
-      final widget = MPCore.findTargetHashCode(message['target'])?.widget;
+      final element = MPCore.findTargetHashCode(message['target']);
+      final widget = element?.widget;
       if (!(widget is MPOverlayScaffold)) return;
       if (message['event'] == 'onBackgroundTap') {
         widget.onBackgroundTap?.call();
+      } else if (message['event'] == 'forceClose') {
+        final route = ModalRoute.of(element!);
+        if (route != null && route.isCurrent == true) {
+          route.navigator?.pop();
+        } else if (route != null && route.isActive == true) {
+          route.navigator?.removeRoute(route);
+        }
       }
     } catch (e) {
       print(e);
@@ -334,6 +362,16 @@ class MPChannelBase {
         MPDrawable.receivedDecodedResult(message);
       } else if (message['event'] == 'onError') {
         MPDrawable.receivedDecodedError(message);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  static void onCustomPaint(Map message) {
+    try {
+      if (message['event'] == 'onFetchImageResult') {
+        MPCustomPaintToImage.receivedFetchImageResult(message);
       }
     } catch (e) {
       print(e);

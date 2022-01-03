@@ -6,14 +6,23 @@ import 'i18n.dart';
 
 final Map<int, List<String>> subpackages = {};
 final subpackageSizeLimited = 1024 * 1024 * 1.9;
+Map? miniProgramConfig;
+List<String> miniProgramPages = [];
+Map? appJson;
 
 main(List<String> args) {
   print(I18n.building());
+  appJson = json.decode(
+    File(p.join('weapp', 'app.json')).readAsStringSync(),
+  ) as Map;
   _checkPubspec();
   _createBuildDir();
+  miniProgramConfig = _fetchMiniProgramConfig();
   plugin_builder.main(args);
   _copyWeappSource();
+  _createPages();
   _buildDartJS(args);
+  File(p.join('build', 'app.json')).writeAsStringSync(json.encode(appJson));
   print(I18n.buildSuccess('build'));
 }
 
@@ -32,7 +41,17 @@ _createBuildDir() {
   }
 }
 
-String _buildDartJS(List<String> args) {
+Map? _fetchMiniProgramConfig() {
+  if (File(p.join('lib', 'weapp.config.dart')).existsSync()) {
+    try {
+      final result =
+          Process.runSync('dart', [p.join('lib', 'weapp.config.dart')]);
+      return json.decode(result.stdout);
+    } catch (e) {}
+  }
+}
+
+void _buildDartJS(List<String> args) {
   final dart2JSParams = args.toList();
   if (!dart2JSParams.any((element) => element.startsWith('-O'))) {
     dart2JSParams.add('-O4');
@@ -40,13 +59,13 @@ String _buildDartJS(List<String> args) {
   final dart2JsResult = Process.runSync(
       'dart2js',
       [
-        'lib/main.dart',
+        p.join('lib', 'main.dart'),
         ...dart2JSParams,
         '-Ddart.vm.product=true',
         '-Dmpflutter.hostType=wechatMiniProgram',
         '--csp',
         '-o',
-        'build/main.dart.js'
+        p.join('build', 'main.dart.js'),
       ]..removeWhere((element) => element.isEmpty),
       runInShell: true);
   if (dart2JsResult.exitCode != 0) {
@@ -58,7 +77,7 @@ String _buildDartJS(List<String> args) {
   _moveDeferedScriptToSubpackages();
   _writeSubpackagesToAppJson();
   _writeSubpackageLoader();
-  var codeSource = File('./build/main.dart.js').readAsStringSync();
+  var codeSource = File(p.join('build', 'main.dart.js')).readAsStringSync();
   codeSource = codeSource
       .replaceAll(RegExp(r"\n}\)\(\);"), "\n});")
       .replaceAll("else s([])})})()", "else s([])})})");
@@ -67,10 +86,10 @@ String _buildDartJS(List<String> args) {
           codeSource;
   codeSource = codeSource.replaceFirst("""(function dartProgram()""",
       """var \$__dart_deferred_initializers__ = self.\$__dart_deferred_initializers__;module.exports.main = (function dartProgram()""");
-  File('./build/main.dart.js').writeAsStringSync(codeSource);
-  var appSource = File('./build/app.js').readAsStringSync();
+  File(p.join('build', 'main.dart.js')).writeAsStringSync(codeSource);
+  var appSource = File(p.join('build', 'app.js')).readAsStringSync();
   appSource = appSource.replaceAll("var dev = true;", "var dev = false;");
-  File('./build/app.js').writeAsStringSync(appSource);
+  File(p.join('build', 'app.js')).writeAsStringSync(appSource);
   final buildBundleResult = Process.runSync(
     'flutter',
     [
@@ -78,28 +97,80 @@ String _buildDartJS(List<String> args) {
       'bundle',
     ],
     runInShell: true,
+    environment: {'PUB_HOSTED_URL': 'https://pub.mpflutter.com'},
   );
   if (buildBundleResult.exitCode != 0) {
     print(buildBundleResult.stdout);
     print(buildBundleResult.stderr);
     throw I18n.executeFail('flutter build bundle');
   }
-  if (Directory('./build/flutter_assets').existsSync()) {
-    Directory('./build/flutter_assets').renameSync('./build/assets');
+  if (Directory(p.join('build', 'flutter_assets')).existsSync()) {
+    Directory(p.join('build', 'flutter_assets'))
+        .renameSync(p.join('build', 'assets'));
   }
   _removeFiles([
-    './build/assets/isolate_snapshot_data',
-    './build/assets/kernel_blob.bin',
-    './build/assets/vm_snapshot_data',
-    './build/snapshot_blob.bin.d'
+    p.join('build', 'assets', 'isolate_snapshot_data'),
+    p.join('build', 'assets', 'kernel_blob.bin'),
+    p.join('build', 'assets', 'vm_snapshot_data'),
+    p.join('build', 'assets', 'snapshot_blob.bin.d'),
   ]);
-  return File('./build/assets/.last_build_id')
-      .readAsStringSync()
-      .substring(0, 6);
 }
 
 _copyWeappSource() {
-  _copyPathSync('./weapp', './build/');
+  _copyPathSync(p.join('weapp'), p.join('build'));
+  File(p.join('build', 'app.json')).deleteSync();
+}
+
+_createPages() {
+  if (miniProgramConfig == null) return;
+  if (miniProgramConfig!['pages'] is Map) {
+    (miniProgramConfig!['pages'] as Map).forEach((path, pageConfig) {
+      if (path is String && path == '/' && pageConfig is Map) {
+        final jsonPath = p.joinAll(['build', 'pages', 'index', 'index.json']);
+        File(jsonPath).writeAsStringSync(json.encode(
+          {}..addAll({
+              'usingComponents': {'element': '../../kbone/miniprogram-element'}
+            }..addAll(pageConfig)),
+        ));
+      } else if (path is String && path.startsWith('/') && pageConfig is Map) {
+        miniProgramPages.add(path.substring(1));
+        final jsPath =
+            p.joinAll(['build', ...path.split("/")..removeAt(0)]) + '.js';
+        final wxmlPath =
+            p.joinAll(['build', ...path.split("/")..removeAt(0)]) + '.wxml';
+        final jsonPath =
+            p.joinAll(['build', ...path.split("/")..removeAt(0)]) + '.json';
+        String coreLibRequireBase = '';
+        (path.split("/")
+              ..removeAt(0)
+              ..removeLast())
+            .forEach((element) {
+          coreLibRequireBase += '../';
+        });
+        if (coreLibRequireBase.isEmpty) {
+          coreLibRequireBase = './';
+        }
+        File(jsPath).writeAsStringSync('''
+const WXPage = require('${coreLibRequireBase}mpdom.min').WXPage;
+
+const thePage = new WXPage({route: '${path}'});
+thePage.kboneRender = require('${coreLibRequireBase}kbone/miniprogram-render/index')
+Page(thePage);
+        ''');
+        File(jsonPath).writeAsStringSync(json.encode(
+          {}..addAll({
+              'usingComponents': {
+                'element': '${coreLibRequireBase}kbone/miniprogram-element'
+              }
+            }..addAll(pageConfig)),
+        ));
+        File(wxmlPath).writeAsStringSync('''
+<page-meta><navigation-bar title="{{pageMeta.naviBar.title}}" loading="{{pageMeta.naviBar.loading}}" front-color="{{pageMeta.naviBar.frontColor || '#000000'}}" background-color="{{pageMeta.naviBar.backgroundColor || '#ffffff'}}"></navigation-bar></page-meta>
+<element wx:if="{{pageId}}" class="miniprogram-root" data-private-node-id="e-body" data-private-page-id="{{pageId}}" ></element>
+        ''');
+      }
+    });
+  }
 }
 
 _moveDeferedScriptToSubpackages() {
@@ -119,7 +190,7 @@ _moveDeferedScriptToSubpackages() {
       currentSubpackageFiles = [];
       currentSubpackageLocation().createSync();
     }
-    final fileName = element.path.split("/").removeLast();
+    final fileName = p.basename(element.path);
     subpackages[currentSubpackageIndex]!.add(fileName);
     currentSubpackageFiles.add(fileName);
     currentSubpackageSize += File(element.path).statSync().size;
@@ -170,19 +241,17 @@ _modulizeDeferedJSCode(File file) {
 }
 
 _writeSubpackagesToAppJson() {
+  if (appJson == null) return;
   if (subpackages.isNotEmpty) {
-    var appJson = json.decode(
-      File(p.join('build', 'app.json')).readAsStringSync(),
-    ) as Map;
-    appJson['subpackages'] ??= [];
-    (appJson['subpackages'] as List)
+    appJson!['subpackages'] ??= [];
+    (appJson!['pages'] as List)..addAll(miniProgramPages);
+    (appJson!['subpackages'] as List)
       ..addAll(subpackages.keys.map((e) {
         return {
           "root": "dart_package_$e",
           "pages": ["loader"]
         };
       }).toList());
-    File(p.join('build', 'app.json')).writeAsStringSync(json.encode(appJson));
   }
 }
 
@@ -230,21 +299,21 @@ self.dartDeferredLibraryLoader = function(uri, res, rej) {
   }
 };
 """;
-    var code = File('build/main.dart.js').readAsStringSync();
+    var code = File(p.join('build', 'main.dart.js')).readAsStringSync();
     code = code + loaderCode;
-    File('build/main.dart.js').writeAsStringSync(code);
+    File(p.join('build', 'main.dart.js')).writeAsStringSync(code);
   }
 }
 
 _fixDefererLoader() {
-  var code = File('build/main.dart.js').readAsStringSync();
+  var code = File(p.join('build', 'main.dart.js')).readAsStringSync();
   code = code.replaceAllMapped(RegExp(r"m=\$\.([a-z0-9A-Z]+)\(\)\nm.toString"),
       (match) {
     return "m=\$.${match.group(1)}() || ''\nm.toString";
   });
   code = code.replaceFirst(
       "\$.\$get\$thisScript();", "\$.\$get\$thisScript() || '';");
-  File('build/main.dart.js').writeAsStringSync(code);
+  File(p.join('build', 'main.dart.js')).writeAsStringSync(code);
 }
 
 _removeFiles(List<String> files) {

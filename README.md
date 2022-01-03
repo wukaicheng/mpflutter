@@ -27,3 +27,13 @@ MPFlutter 提供了丰富的组件、接口，开发者可以轻松地为应用�
 [Flutter 中文站 https://flutter-io.cn](https://flutter-io.cn)
 
 [《Flutter 实战》 https://book.flutterchina.club](https://book.flutterchina.club)
+
+## 贡献代码
+
+当前 MPFlutter 处于初级阶段，如果你希望为 MPFlutter 贡献代码，又或者是想要研究 MPFlutter 的运行原理，可以阅读 [Contribute Guide](./CONTRIBUTE.md) 尝试搭建框架开发环境。
+
+## 隐私声明
+
+你的使用行为（只限于网站、DevTools）会被发送至 Google Analytics 用于统计，这些行为数据不包含特定的用户标识。
+
+MPFlutter 保证，使用 MPFlutter 构建的最终产物，不会包含任何跟踪代码，也不会收集使用行为。

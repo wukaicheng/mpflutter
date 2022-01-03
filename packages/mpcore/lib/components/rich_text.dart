@@ -35,6 +35,7 @@ void _onMeasuredText(List values) {
 MPElement _encodeRichText(Element element) {
   final widget = element.widget as RichText;
   final renderObject = element.findRenderObject();
+  var shouldMeasure = false;
   // ignore: invalid_use_of_protected_member
   var constraints = element.findRenderObject()?.constraints as BoxConstraints?;
   if (renderObject is RenderParagraph &&
@@ -53,7 +54,32 @@ MPElement _encodeRichText(Element element) {
     }
   }
   if (renderObject is RenderParagraph && renderObject.measuredSize == null) {
-    _measuringText[element.hashCode] = element;
+    final maybeMPText = element.findAncestorWidgetOfExactType<MPText>();
+    if (constraints != null &&
+        constraints.hasBoundedWidth &&
+        constraints.hasBoundedHeight &&
+        widget is MPRichText &&
+        widget.noMeasure == true) {
+      renderObject.measuredSize = Size(
+        constraints.maxWidth,
+        constraints.maxHeight,
+      );
+    } else if (constraints != null &&
+        constraints.hasBoundedWidth &&
+        constraints.hasBoundedHeight &&
+        maybeMPText is MPText &&
+        maybeMPText.noMeasure == true) {
+      renderObject.measuredSize = Size(
+        constraints.maxWidth,
+        constraints.maxHeight,
+      );
+    } else {
+      shouldMeasure = true;
+      _measuringText[element.hashCode] = element;
+    }
+  }
+  if (!shouldMeasure) {
+    BuildOwner.beingMeasureElements.remove(element);
   }
   constraints ??= BoxConstraints(
     minWidth: 0,
@@ -61,18 +87,40 @@ MPElement _encodeRichText(Element element) {
     maxWidth: double.infinity,
     maxHeight: double.infinity,
   );
+  var maxWidth = constraints.maxWidth;
+  var maxHeight = constraints.maxHeight;
+  var currentRenderObject = element.findRenderObject();
+  while (currentRenderObject != null) {
+    // ignore: invalid_use_of_protected_member
+    dynamic currentConstraints = currentRenderObject.constraints;
+    if (currentConstraints is BoxConstraints) {
+      if (maxWidth.isInfinite && currentConstraints.maxWidth.isFinite) {
+        maxWidth = currentConstraints.maxWidth;
+      } else if (maxWidth.isFinite && currentConstraints.maxWidth.isFinite) {
+        maxWidth = min(maxWidth, currentConstraints.maxWidth);
+      }
+      if (maxHeight.isInfinite && currentConstraints.maxHeight.isFinite) {
+        maxHeight = currentConstraints.maxHeight;
+      } else if (maxHeight.isFinite && currentConstraints.maxHeight.isFinite) {
+        maxHeight = min(maxHeight, currentConstraints.maxHeight);
+      }
+    }
+    dynamic parent = currentRenderObject.parent;
+    if (parent is RenderObject) {
+      currentRenderObject = parent;
+    } else {
+      currentRenderObject = null;
+    }
+  }
   return MPElement(
     hashCode: element.hashCode,
     flutterElement: element,
     name: 'rich_text',
     children: [_encodeSpan(widget.text, element, 0, 0)],
     attributes: {
-      'measureId':
-          renderObject is RenderParagraph && renderObject.measuredSize == null
-              ? element.hashCode
-              : null,
-      'maxWidth': constraints.maxWidth.toString(),
-      'maxHeight': constraints.maxHeight.toString(),
+      'measureId': shouldMeasure ? element.hashCode : null,
+      'maxWidth': maxWidth.toString(),
+      'maxHeight': maxHeight.toString(),
       'maxLines': widget.maxLines,
       'textAlign': widget.textAlign.toString(),
     },

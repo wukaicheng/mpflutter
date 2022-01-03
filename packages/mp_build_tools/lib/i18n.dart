@@ -32,6 +32,15 @@ class I18n {
     }
   }
 
+  static needNodeEnv() {
+    switch (currentLang) {
+      case Lang.zh:
+        return '构建脚本需要 NodeJS 环境，请到 https://nodejs.org/ 安装。';
+      default:
+        return 'The build script needs NodeJS, please install via https://nodejs.org/';
+    }
+  }
+
   static building() {
     switch (currentLang) {
       case Lang.zh:
@@ -159,6 +168,63 @@ class I18n {
         return '正在获取版本信息...';
       default:
         return 'Fetching version info from remote...';
+    }
+  }
+
+  static pleaseInputIndex() {
+    switch (currentLang) {
+      case Lang.zh:
+        return '请输入序号:';
+      default:
+        return 'Please input the index:';
+    }
+  }
+
+  static askTemplatePluginName() {
+    switch (currentLang) {
+      case Lang.zh:
+        return '请输入扩展名称，合法字符为全小写英文和下划线：';
+      default:
+        return 'Enter the plugin name please, can only be lower-case and under-dash:';
+    }
+  }
+
+  static pluginAlreadyExist(String name) {
+    switch (currentLang) {
+      case Lang.zh:
+        return '扩展目录已存在，请删除 local_plugins/$name 目录后再试。';
+      default:
+        return 'The plugin dir already exist, delete local_plugins/$name and try again.';
+    }
+  }
+
+  static useGitee() {
+    switch (currentLang) {
+      case Lang.zh:
+        return '要使用 Gitee 源下载模板代码吗？';
+      default:
+        return 'Use gitee as download source?';
+    }
+  }
+
+  static localPluginCreated(String name) {
+    switch (currentLang) {
+      case Lang.zh:
+        return '''
+扩展代码已生成，请进入 local_plugins/$name 目录查看。
+此外，你还需要手动将扩展添加到 pubspec.yaml 项目依赖文件中。
+dependencies:
+  $name:
+    path: local_plugins/$name
+''';
+      default:
+        return '''
+The plugin code is now ready, goto local_plugins/$name dir with checking.
+And then, you need to add dependency to pubspec.yaml.
+dependencies:
+  $name:
+    path: local_plugins/$name
+''';
     }
   }
 }

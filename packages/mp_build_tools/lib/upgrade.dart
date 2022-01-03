@@ -17,19 +17,19 @@ main(List<String> args) async {
           'https://api.github.com/repos/mpflutter/mpflutter/branches/master')))
       .body) as Map;
   final versions = <String>[];
-  versions.add((masterBranch['commit']['sha'] as String).substring(0, 7));
   versions.addAll(tags.sublist(0, min(10, tags.length)).map((e) => e['name']));
+  versions.add((masterBranch['commit']['sha'] as String).substring(0, 7));
   final versionDialog = CLI_Dialog(listQuestions: [
     [
       {
         'question': I18n.selectVersionCode(),
-        'options': [...versions, 'Cancel']
+        'options': [...versions, '0.0.1-master', 'Cancel']
       },
       'versionCode'
     ]
   ]);
   final versionCode = versionDialog.ask()['versionCode'];
-  if (versionCode == null || versionCode == '/') {
+  if (versionCode == null || versionCode == 'Cancel' || versionCode == '/') {
     return;
   } else {
     final pubspecFile = File(p.join('pubspec.yaml'));
@@ -40,19 +40,19 @@ main(List<String> args) async {
         return '${match.group(1)}${versionCode}';
       });
       pubspecContent =
-          pubspecContent.replaceAllMapped(RegExp(r'flutter:.*'), (match) {
+          pubspecContent.replaceAllMapped(RegExp(r'flutter:.+'), (match) {
         return 'flutter: "${versionCode}"';
       });
       pubspecContent = pubspecContent
-          .replaceAllMapped(RegExp(r'flutter_web_plugins:.*'), (match) {
+          .replaceAllMapped(RegExp(r'flutter_web_plugins:.+'), (match) {
         return 'flutter_web_plugins: "${versionCode}"';
       });
       pubspecContent =
-          pubspecContent.replaceAllMapped(RegExp(r'mpcore:.*'), (match) {
+          pubspecContent.replaceAllMapped(RegExp(r'mpcore:.+'), (match) {
         return 'mpcore: "${versionCode}"';
       });
       pubspecContent = pubspecContent
-          .replaceAllMapped(RegExp(r'mp_build_tools:.*'), (match) {
+          .replaceAllMapped(RegExp(r'mp_build_tools:.+'), (match) {
         return 'mp_build_tools: "${versionCode}"';
       });
       File(p.join('pubspec.yaml')).writeAsStringSync(pubspecContent);

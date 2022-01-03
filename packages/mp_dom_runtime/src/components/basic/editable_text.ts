@@ -44,7 +44,7 @@ export class EditableText extends ComponentView {
       if (attributes.placeholderStyle.color) {
         placeholderStyle += `color: ${cssColor(attributes.placeholderStyle.color)};`;
       }
-      setDOMAttribute(this.contentElement, "placeholderStyle", placeholderStyle);
+      setDOMAttribute(this.contentElement, "placeholder-style", placeholderStyle);
     }
     this.contentElement.onkeyup = (event) => {
       if (event.key === "Enter" || event.keyCode === 13) {
@@ -78,43 +78,61 @@ export class EditableText extends ComponentView {
       "type",
       attributes.obscureText ? "password" : this._keyboardType(attributes.keyboardType)
     );
-    setDOMAttribute(this.contentElement, "pattern", this._keyboardPattern(attributes.keyboardType));
+    const keybordPattern = this._keyboardPattern(attributes.keyboardType);
+    if (__MP_TARGET_BROWSER__) {
+      setDOMAttribute(this.contentElement, "pattern", keybordPattern);
+      if (keybordPattern === "[0-9+.]*") {
+        setDOMAttribute(this.contentElement, "inputmode", "decimal");
+      }
+    }
     if (typeof attributes.value === "string") {
-      if (MPEnv.platformType === PlatformType.wxMiniProgram || MPEnv.platformType === PlatformType.swanMiniProgram) {
+      if (__MP_TARGET_WEAPP__ || __MP_TARGET_SWANAPP__) {
         setDOMAttribute(this.contentElement, "value", attributes.value);
       } else {
         this.contentElement.value = attributes.value;
       }
     }
     if (attributes.autofocus) {
-      setDOMAttribute(this.contentElement, "autoFocus", attributes.autofocus);
+      setDOMAttribute(this.contentElement, "auto-focus", attributes.autofocus);
     }
     if (attributes.autoCorrect) {
-      setDOMAttribute(this.contentElement, "autoCorrect", attributes.autoCorrect);
+      setDOMAttribute(this.contentElement, "auto-correct", attributes.autoCorrect);
     }
     if (attributes.placeholder) {
       setDOMAttribute(this.contentElement, "placeholder", attributes.placeholder);
     }
-    if (MPEnv.platformType === PlatformType.wxMiniProgram || MPEnv.platformType === PlatformType.swanMiniProgram) {
+    if (attributes.maxLength) {
+      setDOMAttribute(this.contentElement, "maxlength", attributes.maxLength);
+    }
+    if (__MP_TARGET_WEAPP__ || __MP_TARGET_SWANAPP__) {
       setDOMAttribute(this.contentElement, "disabled", attributes.readOnly ? "true" : undefined);
     } else {
-      setDOMAttribute(this.contentElement, "readOnly", attributes.readOnly ? "true" : undefined);
+      setDOMAttribute(this.contentElement, "read-only", attributes.readOnly ? "true" : undefined);
     }
   }
 
   setChildren() {}
 
   _keyboardType(value: string) {
-    if (value?.indexOf("TextInputType.number") > 0) {
+    if (value?.indexOf("TextInputType.number") >= 0) {
+      if (__MP_TARGET_WEAPP__) {
+        const decimal = value.indexOf("decimal: true") >= 0;
+        if (decimal) {
+          return "digit";
+        }
+      }
       return "number";
+    }
+    if (__MP_TARGET_WEAPP__ && value?.indexOf("TextInputType.idcard") >= 0) {
+      return "idcard";
     }
     return "text";
   }
 
   _keyboardPattern(value: string) {
-    if (value?.indexOf("TextInputType.number") > 0) {
-      const signed = value.indexOf("signed: true") > 0;
-      const decimal = value.indexOf("decimal: true") > 0;
+    if (value?.indexOf("TextInputType.number") >= 0) {
+      const signed = value.indexOf("signed: true") >= 0;
+      const decimal = value.indexOf("decimal: true") >= 0;
       if (signed && decimal) {
         return "[0-9+-.]*";
       }
@@ -123,6 +141,9 @@ export class EditableText extends ComponentView {
       }
       if (!signed && !decimal) {
         return "[0-9]*";
+      }
+      if (!signed && decimal) {
+        return "[0-9+.]*";
       }
     }
     return "";

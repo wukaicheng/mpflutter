@@ -4,6 +4,7 @@ import 'dart:developer' as dev;
 
 import 'package:flutter/widgets.dart';
 import 'package:mime_type/mime_type.dart';
+import 'package:mpcore/ga.dart';
 
 import '../mpcore.dart';
 
@@ -38,6 +39,8 @@ class MPChannel {
       await reloader.go();
     }
     setupWebServer();
+    // ignore: unawaited_futures
+    ga.sendEvent('devtools', 'debug');
   }
 
   static void setupWebServer() async {
@@ -83,17 +86,8 @@ class MPChannel {
           handlePackageAssetsRequest(req);
         } else if (req.uri.path.startsWith('/assets/')) {
           handleAssetsRequest(req);
-        } else if (req.uri.path.startsWith('/bundle.') ||
-            req.uri.path.startsWith('/index.html') ||
-            req.uri.path.startsWith('/index.css') ||
-            req.uri.path.startsWith('/main.dart.js') ||
-            req.uri.path.startsWith('/plugins.min.js') ||
-            req.uri.path.startsWith('/static/')) {
-          handleScaffoldRequest(req);
-        } else if (req.uri.path == '/') {
-          handleScaffoldRequest(req);
         } else {
-          final _ = req.response.close();
+          handleScaffoldRequest(req);
         }
       }
     } catch (e) {

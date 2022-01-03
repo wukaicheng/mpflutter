@@ -78,14 +78,31 @@ class MPScaffoldState extends State<MPScaffold> {
         MediaQuery.of(context).size.height < 10) {
       return Container();
     }
+    final mainTabBar = context
+        .findAncestorStateOfType<MPMainTabViewState>()
+        ?.renderTabBar(context);
+    final mainTabViewWidget =
+        context.findAncestorWidgetOfExactType<MPMainTabView>();
     Widget child = Stack(
       children: [
         Positioned.fill(
           child: Column(
             children: [
-              widget.appBar != null
-                  ? MPScaffoldAppBar(key: appBarKey, child: widget.appBar)
-                  : Container(),
+              (() {
+                if (mainTabBar != null &&
+                    mainTabViewWidget?.tabLocation == MPMainTabLocation.top) {
+                  return MPScaffoldAppBar(
+                    key: appBarKey,
+                    child: mainTabBar,
+                  );
+                } else if (widget.appBar != null) {
+                  return MPScaffoldAppBar(
+                    key: appBarKey,
+                    child: widget.appBar,
+                  );
+                }
+                return Container();
+              })(),
               widget.body != null
                   ? Expanded(
                       child: MPScaffoldBody(
@@ -100,10 +117,22 @@ class MPScaffoldState extends State<MPScaffold> {
                       ),
                     )
                   : Expanded(child: Container()),
-              widget.bottomBar != null
-                  ? MPScaffoldBottomBar(
-                      key: bottomBarKey, child: widget.bottomBar)
-                  : Container(),
+              (() {
+                if (mainTabBar != null &&
+                    mainTabViewWidget?.tabLocation ==
+                        MPMainTabLocation.bottom) {
+                  return MPScaffoldBottomBar(
+                    key: bottomBarKey,
+                    child: mainTabBar,
+                  );
+                } else if (widget.bottomBar != null) {
+                  return MPScaffoldBottomBar(
+                    key: bottomBarKey,
+                    child: widget.bottomBar,
+                  );
+                }
+                return Container();
+              })(),
             ],
           ),
         ),
