@@ -1500,10 +1500,18 @@ class _WidgetsAppState extends State<WidgetsApp> with WidgetsBindingObserver {
       );
     }
 
-    return Directionality(
-      textDirection: TextDirection.ltr,
-      child: _MediaQueryFromWindow(
-        child: title,
+    final Locale appLocale = widget.locale != null
+        ? _resolveLocales(<Locale>[widget.locale!], widget.supportedLocales)
+        : _locale!;
+
+    return Localizations(
+      locale: appLocale,
+      delegates: _localizationsDelegates.toList(),
+      child: Directionality(
+        textDirection: TextDirection.ltr,
+        child: _MediaQueryFromWindow(
+          child: title,
+        ),
       ),
     );
   }

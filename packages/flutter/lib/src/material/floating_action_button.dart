@@ -13,7 +13,6 @@ import 'floating_action_button_theme.dart';
 import 'scaffold.dart';
 import 'theme.dart';
 import 'theme_data.dart';
-import 'tooltip.dart';
 
 const BoxConstraints _kSizeConstraints = BoxConstraints.tightFor(
   width: 56.0,
@@ -672,13 +671,6 @@ class FloatingActionButton extends StatelessWidget {
       enableFeedback: enableFeedback,
       child: resolvedChild,
     );
-
-    if (tooltip != null) {
-      result = Tooltip(
-        message: tooltip!,
-        child: result,
-      );
-    }
 
     if (heroTag != null) {
       result = Hero(

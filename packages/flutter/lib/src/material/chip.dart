@@ -20,7 +20,6 @@ import 'material_state.dart';
 import 'material_state_mixin.dart';
 import 'theme.dart';
 import 'theme_data.dart';
-import 'tooltip.dart';
 
 // Some design constants
 const double _kChipHeight = 32.0;
@@ -1857,10 +1856,7 @@ class _RawChipState extends State<RawChip>
     if (child == null || callback == null || tooltip == null) {
       return child;
     }
-    return Tooltip(
-      message: tooltip,
-      child: child,
-    );
+    return child;
   }
 
   Widget? _buildDeleteIcon(

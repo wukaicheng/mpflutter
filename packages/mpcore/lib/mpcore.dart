@@ -73,7 +73,10 @@ class MPCore {
   void setupMaterialAdapter() {
     MaterialAdapter.scaffoldBuilder = (context, widget) {
       return MPScaffold(
+        appBar: widget.appBar,
+        backgroundColor: widget.backgroundColor,
         body: widget.body,
+        bottomBar: widget.bottomNavigationBar,
       );
     };
   }

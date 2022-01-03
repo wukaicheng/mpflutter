@@ -15,7 +15,6 @@ import 'ink_well.dart';
 import 'material.dart';
 import 'material_localizations.dart';
 import 'theme.dart';
-import 'tooltip.dart';
 
 /// Defines the layout and behavior of a [BottomNavigationBar].
 ///
@@ -635,16 +634,6 @@ class _BottomNavigationTile extends StatelessWidget {
         ),
       ),
     );
-
-    if (effectiveTooltip != null) {
-      result = Tooltip(
-        message: effectiveTooltip,
-        preferBelow: false,
-        verticalOffset: selectedIconSize + selectedFontSize,
-        excludeFromSemantics: true,
-        child: result,
-      );
-    }
 
     result = Semantics(
       selected: selected,

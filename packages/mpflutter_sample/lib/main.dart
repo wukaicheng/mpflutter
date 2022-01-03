@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mpcore/mpcore.dart';
 import 'package:mpflutter_template/animations/animated_container_page.dart';
@@ -55,9 +56,9 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MPApp(
+    return MaterialApp(
       title: 'MPFlutter Demo',
-      color: Colors.blue,
+      theme: ThemeData(primaryColor: Colors.blue),
       routes: {
         '/': (context) => MyHomePage(),
         '/container': (context) => ContainerPage(),

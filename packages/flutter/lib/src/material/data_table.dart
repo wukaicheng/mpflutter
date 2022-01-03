@@ -18,7 +18,6 @@ import 'ink_well.dart';
 import 'material.dart';
 import 'material_state.dart';
 import 'theme.dart';
-import 'tooltip.dart';
 
 /// Signature for [DataColumn.onSort] callback.
 typedef DataColumnSortCallback = void Function(int columnIndex, bool ascending);
@@ -851,12 +850,6 @@ class DataTable extends StatelessWidget {
         child: label,
       ),
     );
-    if (tooltip != null) {
-      label = Tooltip(
-        message: tooltip,
-        child: label,
-      );
-    }
 
     // TODO(dkwingsmt): Only wrap Inkwell if onSort != null. Blocked by
     // https://github.com/flutter/flutter/issues/51152

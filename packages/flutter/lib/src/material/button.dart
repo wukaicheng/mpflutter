@@ -443,10 +443,7 @@ class _RawMaterialButtonState extends State<RawMaterialButton>
       container: true,
       button: true,
       enabled: widget.enabled,
-      child: _InputPadding(
-        minSize: minSize,
-        child: result,
-      ),
+      child: result,
     );
   }
 }

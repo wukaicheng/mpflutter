@@ -44,7 +44,6 @@ import 'text_selection_theme.dart';
 import 'text_theme.dart';
 import 'time_picker_theme.dart';
 import 'toggle_buttons_theme.dart';
-import 'tooltip_theme.dart';
 import 'typography.dart';
 
 export 'package:flutter/services.dart' show Brightness;
@@ -304,7 +303,6 @@ class ThemeData with Diagnosticable {
         IconThemeData? accentIconTheme,
     SliderThemeData? sliderTheme,
     TabBarTheme? tabBarTheme,
-    TooltipThemeData? tooltipTheme,
     CardTheme? cardTheme,
     ChipThemeData? chipTheme,
     TargetPlatform? platform,
@@ -467,7 +465,6 @@ class ThemeData with Diagnosticable {
 
     sliderTheme ??= const SliderThemeData();
     tabBarTheme ??= const TabBarTheme();
-    tooltipTheme ??= const TooltipThemeData();
     appBarTheme ??= const AppBarTheme();
     scrollbarTheme ??= const ScrollbarThemeData();
     bottomAppBarTheme ??= const BottomAppBarTheme();
@@ -545,7 +542,6 @@ class ThemeData with Diagnosticable {
       accentIconTheme: accentIconTheme,
       sliderTheme: sliderTheme,
       tabBarTheme: tabBarTheme,
-      tooltipTheme: tooltipTheme,
       cardTheme: cardTheme,
       chipTheme: chipTheme,
       platform: platform,
@@ -676,7 +672,6 @@ class ThemeData with Diagnosticable {
         required this.accentIconTheme,
     required this.sliderTheme,
     required this.tabBarTheme,
-    required this.tooltipTheme,
     required this.cardTheme,
     required this.chipTheme,
     required this.platform,
@@ -760,7 +755,6 @@ class ThemeData with Diagnosticable {
         assert(accentIconTheme != null),
         assert(sliderTheme != null),
         assert(tabBarTheme != null),
-        assert(tooltipTheme != null),
         assert(cardTheme != null),
         assert(chipTheme != null),
         assert(platform != null),
@@ -1169,11 +1163,6 @@ class ThemeData with Diagnosticable {
   /// A theme for customizing the size, shape, and color of the tab bar indicator.
   final TabBarTheme tabBarTheme;
 
-  /// A theme for customizing the visual properties of [Tooltip]s.
-  ///
-  /// This is the value returned from [TooltipTheme.of].
-  final TooltipThemeData tooltipTheme;
-
   /// The colors and styles used to render [Card].
   ///
   /// This is the value returned from [CardTheme.of].
@@ -1455,7 +1444,6 @@ class ThemeData with Diagnosticable {
         IconThemeData? accentIconTheme,
     SliderThemeData? sliderTheme,
     TabBarTheme? tabBarTheme,
-    TooltipThemeData? tooltipTheme,
     CardTheme? cardTheme,
     ChipThemeData? chipTheme,
     TargetPlatform? platform,
@@ -1549,7 +1537,6 @@ class ThemeData with Diagnosticable {
       accentIconTheme: accentIconTheme ?? this.accentIconTheme,
       sliderTheme: sliderTheme ?? this.sliderTheme,
       tabBarTheme: tabBarTheme ?? this.tabBarTheme,
-      tooltipTheme: tooltipTheme ?? this.tooltipTheme,
       cardTheme: cardTheme ?? this.cardTheme,
       chipTheme: chipTheme ?? this.chipTheme,
       platform: platform ?? this.platform,
@@ -1733,7 +1720,6 @@ class ThemeData with Diagnosticable {
           IconThemeData.lerp(a.accentIconTheme, b.accentIconTheme, t),
       sliderTheme: SliderThemeData.lerp(a.sliderTheme, b.sliderTheme, t),
       tabBarTheme: TabBarTheme.lerp(a.tabBarTheme, b.tabBarTheme, t),
-      tooltipTheme: TooltipThemeData.lerp(a.tooltipTheme, b.tooltipTheme, t)!,
       cardTheme: CardTheme.lerp(a.cardTheme, b.cardTheme, t),
       chipTheme: ChipThemeData.lerp(a.chipTheme, b.chipTheme, t)!,
       platform: t < 0.5 ? a.platform : b.platform,
@@ -1841,7 +1827,6 @@ class ThemeData with Diagnosticable {
         other.accentIconTheme == accentIconTheme &&
         other.sliderTheme == sliderTheme &&
         other.tabBarTheme == tabBarTheme &&
-        other.tooltipTheme == tooltipTheme &&
         other.cardTheme == cardTheme &&
         other.chipTheme == chipTheme &&
         other.platform == platform &&
@@ -1926,7 +1911,6 @@ class ThemeData with Diagnosticable {
       accentIconTheme,
       sliderTheme,
       tabBarTheme,
-      tooltipTheme,
       cardTheme,
       chipTheme,
       platform,
@@ -2075,9 +2059,6 @@ class ThemeData with Diagnosticable {
         'sliderTheme', sliderTheme,
         level: DiagnosticLevel.debug));
     properties.add(DiagnosticsProperty<TabBarTheme>('tabBarTheme', tabBarTheme,
-        level: DiagnosticLevel.debug));
-    properties.add(DiagnosticsProperty<TooltipThemeData>(
-        'tooltipTheme', tooltipTheme,
         level: DiagnosticLevel.debug));
     properties.add(DiagnosticsProperty<CardTheme>('cardTheme', cardTheme,
         level: DiagnosticLevel.debug));
