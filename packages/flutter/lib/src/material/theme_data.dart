@@ -28,19 +28,16 @@ import 'floating_action_button_theme.dart';
 import 'ink_splash.dart';
 import 'ink_well.dart' show InteractiveInkFeatureFactory;
 import 'input_decorator.dart';
-import 'navigation_rail_theme.dart';
 import 'outlined_button_theme.dart';
 import 'page_transitions_theme.dart';
 import 'popup_menu_theme.dart';
 import 'progress_indicator_theme.dart';
 import 'radio_theme.dart';
-import 'scrollbar_theme.dart';
 import 'slider_theme.dart';
 import 'snack_bar_theme.dart';
 import 'switch_theme.dart';
 import 'tab_bar_theme.dart';
 import 'text_button_theme.dart';
-import 'text_selection_theme.dart';
 import 'text_theme.dart';
 import 'time_picker_theme.dart';
 import 'toggle_buttons_theme.dart';
@@ -310,12 +307,10 @@ class ThemeData with Diagnosticable {
     bool? applyElevationOverlayColor,
     PageTransitionsTheme? pageTransitionsTheme,
     AppBarTheme? appBarTheme,
-    ScrollbarThemeData? scrollbarTheme,
     BottomAppBarTheme? bottomAppBarTheme,
     ColorScheme? colorScheme,
     DialogTheme? dialogTheme,
     FloatingActionButtonThemeData? floatingActionButtonTheme,
-    NavigationRailThemeData? navigationRailTheme,
     Typography? typography,
     SnackBarThemeData? snackBarTheme,
     BottomSheetThemeData? bottomSheetTheme,
@@ -328,7 +323,6 @@ class ThemeData with Diagnosticable {
     TextButtonThemeData? textButtonTheme,
     ElevatedButtonThemeData? elevatedButtonTheme,
     OutlinedButtonThemeData? outlinedButtonTheme,
-    TextSelectionThemeData? textSelectionTheme,
     DataTableThemeData? dataTableTheme,
     CheckboxThemeData? checkboxTheme,
     RadioThemeData? radioTheme,
@@ -466,7 +460,6 @@ class ThemeData with Diagnosticable {
     sliderTheme ??= const SliderThemeData();
     tabBarTheme ??= const TabBarTheme();
     appBarTheme ??= const AppBarTheme();
-    scrollbarTheme ??= const ScrollbarThemeData();
     bottomAppBarTheme ??= const BottomAppBarTheme();
     cardTheme ??= const CardTheme();
     chipTheme ??= ChipThemeData.fromDefaults(
@@ -476,7 +469,6 @@ class ThemeData with Diagnosticable {
     );
     dialogTheme ??= const DialogTheme();
     floatingActionButtonTheme ??= const FloatingActionButtonThemeData();
-    navigationRailTheme ??= const NavigationRailThemeData();
     snackBarTheme ??= const SnackBarThemeData();
     bottomSheetTheme ??= const BottomSheetThemeData();
     popupMenuTheme ??= const PopupMenuThemeData();
@@ -488,7 +480,6 @@ class ThemeData with Diagnosticable {
     textButtonTheme ??= const TextButtonThemeData();
     elevatedButtonTheme ??= const ElevatedButtonThemeData();
     outlinedButtonTheme ??= const OutlinedButtonThemeData();
-    textSelectionTheme ??= const TextSelectionThemeData();
     dataTableTheme ??= const DataTableThemeData();
     checkboxTheme ??= const CheckboxThemeData();
     radioTheme ??= const RadioThemeData();
@@ -549,12 +540,10 @@ class ThemeData with Diagnosticable {
       applyElevationOverlayColor: applyElevationOverlayColor,
       pageTransitionsTheme: pageTransitionsTheme,
       appBarTheme: appBarTheme,
-      scrollbarTheme: scrollbarTheme,
       bottomAppBarTheme: bottomAppBarTheme,
       colorScheme: colorScheme,
       dialogTheme: dialogTheme,
       floatingActionButtonTheme: floatingActionButtonTheme,
-      navigationRailTheme: navigationRailTheme,
       typography: typography,
       snackBarTheme: snackBarTheme,
       bottomSheetTheme: bottomSheetTheme,
@@ -567,7 +556,6 @@ class ThemeData with Diagnosticable {
       textButtonTheme: textButtonTheme,
       elevatedButtonTheme: elevatedButtonTheme,
       outlinedButtonTheme: outlinedButtonTheme,
-      textSelectionTheme: textSelectionTheme,
       dataTableTheme: dataTableTheme,
       checkboxTheme: checkboxTheme,
       radioTheme: radioTheme,
@@ -679,12 +667,10 @@ class ThemeData with Diagnosticable {
     required this.applyElevationOverlayColor,
     required this.pageTransitionsTheme,
     required this.appBarTheme,
-    required this.scrollbarTheme,
     required this.bottomAppBarTheme,
     required this.colorScheme,
     required this.dialogTheme,
     required this.floatingActionButtonTheme,
-    required this.navigationRailTheme,
     required this.typography,
     required this.snackBarTheme,
     required this.bottomSheetTheme,
@@ -697,7 +683,6 @@ class ThemeData with Diagnosticable {
     required this.textButtonTheme,
     required this.elevatedButtonTheme,
     required this.outlinedButtonTheme,
-    required this.textSelectionTheme,
     required this.dataTableTheme,
     required this.checkboxTheme,
     required this.radioTheme,
@@ -761,12 +746,10 @@ class ThemeData with Diagnosticable {
         assert(materialTapTargetSize != null),
         assert(pageTransitionsTheme != null),
         assert(appBarTheme != null),
-        assert(scrollbarTheme != null),
         assert(bottomAppBarTheme != null),
         assert(colorScheme != null),
         assert(dialogTheme != null),
         assert(floatingActionButtonTheme != null),
-        assert(navigationRailTheme != null),
         assert(typography != null),
         assert(snackBarTheme != null),
         assert(bottomSheetTheme != null),
@@ -779,7 +762,6 @@ class ThemeData with Diagnosticable {
         assert(textButtonTheme != null),
         assert(elevatedButtonTheme != null),
         assert(outlinedButtonTheme != null),
-        assert(textSelectionTheme != null),
         assert(dataTableTheme != null),
         assert(checkboxTheme != null),
         assert(radioTheme != null),
@@ -1244,9 +1226,6 @@ class ThemeData with Diagnosticable {
   /// textTheme of [AppBar]s.
   final AppBarTheme appBarTheme;
 
-  /// A theme for customizing the colors, thickness, and shape of [Scrollbar]s.
-  final ScrollbarThemeData scrollbarTheme;
-
   /// A theme for customizing the shape, elevation, and color of a [BottomAppBar].
   final BottomAppBarTheme bottomAppBarTheme;
 
@@ -1269,10 +1248,6 @@ class ThemeData with Diagnosticable {
   /// A theme for customizing the shape, elevation, and color of a
   /// [FloatingActionButton].
   final FloatingActionButtonThemeData floatingActionButtonTheme;
-
-  /// A theme for customizing the background color, elevation, text style, and
-  /// icon themes of a [NavigationRail].
-  final NavigationRailThemeData navigationRailTheme;
 
   /// The color and geometry [TextTheme] values used to configure [textTheme].
   final Typography typography;
@@ -1312,9 +1287,6 @@ class ThemeData with Diagnosticable {
   /// A theme for customizing the appearance and internal layout of
   /// [OutlinedButton]s.
   final OutlinedButtonThemeData outlinedButtonTheme;
-
-  /// A theme for customizing the appearance and layout of [TextField] widgets.
-  final TextSelectionThemeData textSelectionTheme;
 
   /// A theme for customizing the appearance and layout of [DataTable]
   /// widgets.
@@ -1451,12 +1423,10 @@ class ThemeData with Diagnosticable {
     bool? applyElevationOverlayColor,
     PageTransitionsTheme? pageTransitionsTheme,
     AppBarTheme? appBarTheme,
-    ScrollbarThemeData? scrollbarTheme,
     BottomAppBarTheme? bottomAppBarTheme,
     ColorScheme? colorScheme,
     DialogTheme? dialogTheme,
     FloatingActionButtonThemeData? floatingActionButtonTheme,
-    NavigationRailThemeData? navigationRailTheme,
     Typography? typography,
     SnackBarThemeData? snackBarTheme,
     BottomSheetThemeData? bottomSheetTheme,
@@ -1469,7 +1439,6 @@ class ThemeData with Diagnosticable {
     TextButtonThemeData? textButtonTheme,
     ElevatedButtonThemeData? elevatedButtonTheme,
     OutlinedButtonThemeData? outlinedButtonTheme,
-    TextSelectionThemeData? textSelectionTheme,
     DataTableThemeData? dataTableTheme,
     CheckboxThemeData? checkboxTheme,
     RadioThemeData? radioTheme,
@@ -1546,14 +1515,12 @@ class ThemeData with Diagnosticable {
           applyElevationOverlayColor ?? this.applyElevationOverlayColor,
       pageTransitionsTheme: pageTransitionsTheme ?? this.pageTransitionsTheme,
       appBarTheme: appBarTheme ?? this.appBarTheme,
-      scrollbarTheme: scrollbarTheme ?? this.scrollbarTheme,
       bottomAppBarTheme: bottomAppBarTheme ?? this.bottomAppBarTheme,
       colorScheme:
           (colorScheme ?? this.colorScheme).copyWith(brightness: brightness),
       dialogTheme: dialogTheme ?? this.dialogTheme,
       floatingActionButtonTheme:
           floatingActionButtonTheme ?? this.floatingActionButtonTheme,
-      navigationRailTheme: navigationRailTheme ?? this.navigationRailTheme,
       typography: typography ?? this.typography,
       snackBarTheme: snackBarTheme ?? this.snackBarTheme,
       bottomSheetTheme: bottomSheetTheme ?? this.bottomSheetTheme,
@@ -1567,7 +1534,6 @@ class ThemeData with Diagnosticable {
       textButtonTheme: textButtonTheme ?? this.textButtonTheme,
       elevatedButtonTheme: elevatedButtonTheme ?? this.elevatedButtonTheme,
       outlinedButtonTheme: outlinedButtonTheme ?? this.outlinedButtonTheme,
-      textSelectionTheme: textSelectionTheme ?? this.textSelectionTheme,
       dataTableTheme: dataTableTheme ?? this.dataTableTheme,
       checkboxTheme: checkboxTheme ?? this.checkboxTheme,
       radioTheme: radioTheme ?? this.radioTheme,
@@ -1730,16 +1696,12 @@ class ThemeData with Diagnosticable {
       pageTransitionsTheme:
           t < 0.5 ? a.pageTransitionsTheme : b.pageTransitionsTheme,
       appBarTheme: AppBarTheme.lerp(a.appBarTheme, b.appBarTheme, t),
-      scrollbarTheme:
-          ScrollbarThemeData.lerp(a.scrollbarTheme, b.scrollbarTheme, t),
       bottomAppBarTheme:
           BottomAppBarTheme.lerp(a.bottomAppBarTheme, b.bottomAppBarTheme, t),
       colorScheme: ColorScheme.lerp(a.colorScheme, b.colorScheme, t),
       dialogTheme: DialogTheme.lerp(a.dialogTheme, b.dialogTheme, t),
       floatingActionButtonTheme: FloatingActionButtonThemeData.lerp(
           a.floatingActionButtonTheme, b.floatingActionButtonTheme, t)!,
-      navigationRailTheme: NavigationRailThemeData.lerp(
-          a.navigationRailTheme, b.navigationRailTheme, t)!,
       typography: Typography.lerp(a.typography, b.typography, t),
       snackBarTheme:
           SnackBarThemeData.lerp(a.snackBarTheme, b.snackBarTheme, t),
@@ -1762,8 +1724,6 @@ class ThemeData with Diagnosticable {
           a.elevatedButtonTheme, b.elevatedButtonTheme, t)!,
       outlinedButtonTheme: OutlinedButtonThemeData.lerp(
           a.outlinedButtonTheme, b.outlinedButtonTheme, t)!,
-      textSelectionTheme: TextSelectionThemeData.lerp(
-          a.textSelectionTheme, b.textSelectionTheme, t)!,
       dataTableTheme:
           DataTableThemeData.lerp(a.dataTableTheme, b.dataTableTheme, t),
       checkboxTheme:
@@ -1834,12 +1794,10 @@ class ThemeData with Diagnosticable {
         other.applyElevationOverlayColor == applyElevationOverlayColor &&
         other.pageTransitionsTheme == pageTransitionsTheme &&
         other.appBarTheme == appBarTheme &&
-        other.scrollbarTheme == scrollbarTheme &&
         other.bottomAppBarTheme == bottomAppBarTheme &&
         other.colorScheme == colorScheme &&
         other.dialogTheme == dialogTheme &&
         other.floatingActionButtonTheme == floatingActionButtonTheme &&
-        other.navigationRailTheme == navigationRailTheme &&
         other.typography == typography &&
         other.snackBarTheme == snackBarTheme &&
         other.bottomSheetTheme == bottomSheetTheme &&
@@ -1852,7 +1810,6 @@ class ThemeData with Diagnosticable {
         other.textButtonTheme == textButtonTheme &&
         other.elevatedButtonTheme == elevatedButtonTheme &&
         other.outlinedButtonTheme == outlinedButtonTheme &&
-        other.textSelectionTheme == textSelectionTheme &&
         other.dataTableTheme == dataTableTheme &&
         other.checkboxTheme == checkboxTheme &&
         other.radioTheme == radioTheme &&
@@ -1918,12 +1875,10 @@ class ThemeData with Diagnosticable {
       applyElevationOverlayColor,
       pageTransitionsTheme,
       appBarTheme,
-      scrollbarTheme,
       bottomAppBarTheme,
       colorScheme,
       dialogTheme,
       floatingActionButtonTheme,
-      navigationRailTheme,
       typography,
       snackBarTheme,
       bottomSheetTheme,
@@ -1936,7 +1891,6 @@ class ThemeData with Diagnosticable {
       textButtonTheme,
       elevatedButtonTheme,
       outlinedButtonTheme,
-      textSelectionTheme,
       dataTableTheme,
       checkboxTheme,
       radioTheme,
@@ -2075,10 +2029,6 @@ class ThemeData with Diagnosticable {
         level: DiagnosticLevel.debug));
     properties.add(DiagnosticsProperty<AppBarTheme>('appBarTheme', appBarTheme,
         defaultValue: defaultData.appBarTheme, level: DiagnosticLevel.debug));
-    properties.add(DiagnosticsProperty<ScrollbarThemeData>(
-        'ScrollbarTheme', scrollbarTheme,
-        defaultValue: defaultData.scrollbarTheme,
-        level: DiagnosticLevel.debug));
     properties.add(DiagnosticsProperty<BottomAppBarTheme>(
         'bottomAppBarTheme', bottomAppBarTheme,
         defaultValue: defaultData.bottomAppBarTheme,
@@ -2090,10 +2040,6 @@ class ThemeData with Diagnosticable {
     properties.add(DiagnosticsProperty<FloatingActionButtonThemeData>(
         'floatingActionButtonThemeData', floatingActionButtonTheme,
         defaultValue: defaultData.floatingActionButtonTheme,
-        level: DiagnosticLevel.debug));
-    properties.add(DiagnosticsProperty<NavigationRailThemeData>(
-        'navigationRailThemeData', navigationRailTheme,
-        defaultValue: defaultData.navigationRailTheme,
         level: DiagnosticLevel.debug));
     properties.add(DiagnosticsProperty<Typography>('typography', typography,
         defaultValue: defaultData.typography, level: DiagnosticLevel.debug));
@@ -2121,14 +2067,6 @@ class ThemeData with Diagnosticable {
     properties.add(DiagnosticsProperty<TimePickerThemeData>(
         'timePickerTheme', timePickerTheme,
         defaultValue: defaultData.timePickerTheme,
-        level: DiagnosticLevel.debug));
-    properties.add(DiagnosticsProperty<TextSelectionThemeData>(
-        'textSelectionTheme', textSelectionTheme,
-        defaultValue: defaultData.textSelectionTheme,
-        level: DiagnosticLevel.debug));
-    properties.add(DiagnosticsProperty<TextSelectionThemeData>(
-        'textSelectionTheme', textSelectionTheme,
-        defaultValue: defaultData.textSelectionTheme,
         level: DiagnosticLevel.debug));
     properties.add(DiagnosticsProperty<BottomNavigationBarThemeData>(
         'bottomNavigationBarTheme', bottomNavigationBarTheme,

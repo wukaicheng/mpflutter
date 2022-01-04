@@ -160,8 +160,6 @@ class OutlinedButton extends ButtonStyleButton {
     Size? maximumSize,
     BorderSide? side,
     OutlinedBorder? shape,
-    MouseCursor? enabledMouseCursor,
-    MouseCursor? disabledMouseCursor,
     VisualDensity? visualDensity,
     MaterialTapTargetSize? tapTargetSize,
     Duration? animationDuration,
@@ -175,11 +173,6 @@ class OutlinedButton extends ButtonStyleButton {
             : _OutlinedButtonDefaultForeground(primary, onSurface);
     final MaterialStateProperty<Color?>? overlayColor =
         (primary == null) ? null : _OutlinedButtonDefaultOverlay(primary);
-    final MaterialStateProperty<MouseCursor>? mouseCursor =
-        (enabledMouseCursor == null && disabledMouseCursor == null)
-            ? null
-            : _OutlinedButtonDefaultMouseCursor(
-                enabledMouseCursor!, disabledMouseCursor!);
 
     return ButtonStyle(
       textStyle: ButtonStyleButton.allOrNull<TextStyle>(textStyle),
@@ -194,7 +187,6 @@ class OutlinedButton extends ButtonStyleButton {
       maximumSize: ButtonStyleButton.allOrNull<Size>(maximumSize),
       side: ButtonStyleButton.allOrNull<BorderSide>(side),
       shape: ButtonStyleButton.allOrNull<OutlinedBorder>(shape),
-      mouseCursor: mouseCursor,
       visualDensity: visualDensity,
       tapTargetSize: tapTargetSize,
       animationDuration: animationDuration,
@@ -271,7 +263,7 @@ class OutlinedButton extends ButtonStyleButton {
     return styleFrom(
       primary: colorScheme.primary,
       onSurface: colorScheme.onSurface,
-      backgroundColor: Colors.transparent,
+      backgroundColor: Color(0),
       shadowColor: theme.shadowColor,
       elevation: 0,
       textStyle: theme.textTheme.button,
@@ -284,8 +276,6 @@ class OutlinedButton extends ButtonStyleButton {
       ),
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(4))),
-      enabledMouseCursor: SystemMouseCursors.click,
-      disabledMouseCursor: SystemMouseCursors.forbidden,
       visualDensity: theme.visualDensity,
       tapTargetSize: theme.materialTapTargetSize,
       animationDuration: kThemeChangeDuration,
@@ -332,21 +322,6 @@ class _OutlinedButtonDefaultOverlay extends MaterialStateProperty<Color?>
         states.contains(MaterialState.pressed))
       return primary.withOpacity(0.12);
     return null;
-  }
-}
-
-@immutable
-class _OutlinedButtonDefaultMouseCursor
-    extends MaterialStateProperty<MouseCursor> with Diagnosticable {
-  _OutlinedButtonDefaultMouseCursor(this.enabledCursor, this.disabledCursor);
-
-  final MouseCursor enabledCursor;
-  final MouseCursor disabledCursor;
-
-  @override
-  MouseCursor resolve(Set<MaterialState> states) {
-    if (states.contains(MaterialState.disabled)) return disabledCursor;
-    return enabledCursor;
   }
 }
 

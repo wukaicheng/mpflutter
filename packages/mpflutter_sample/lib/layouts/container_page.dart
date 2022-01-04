@@ -43,21 +43,7 @@ class ContainerPage extends StatelessWidget {
         title: Text('Hello'),
       ),
       backgroundColor: Color.fromARGB(255, 236, 236, 236),
-      body: Center(
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(12),
-          child: MaterialButton(
-            onPressed: () {
-              print("fdkjhsalf");
-            },
-            color: Colors.blue,
-            height: 44,
-            child: Text(
-              'Hello button',
-            ),
-          ),
-        ),
-      ),
+      body: Center(),
     );
   }
 }
