@@ -33,7 +33,6 @@ part './components/opacity.dart';
 part './components/sliver_list.dart';
 part './components/sliver_grid.dart';
 part './components/decorated_box.dart';
-part './components/icon.dart';
 part './components/overlay.dart';
 part './components/clip_oval.dart';
 part './components/div_box.dart';
@@ -77,6 +76,13 @@ class MPCore {
         backgroundColor: widget.backgroundColor,
         body: widget.body,
         bottomBar: widget.bottomNavigationBar,
+      );
+    };
+    MaterialAdapter.iconBuilder = (context, widget) {
+      return MPIcon(
+        widget.icon?.url ?? '',
+        size: widget.size ?? 24,
+        color: widget.color ?? Colors.black,
       );
     };
   }

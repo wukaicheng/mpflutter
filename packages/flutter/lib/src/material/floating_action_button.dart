@@ -85,7 +85,7 @@ enum _FloatingActionButtonType {
 ///       onPressed: () {
 ///         // Add your onPressed code here!
 ///       },
-///       child: const Icon(Icons.navigation),
+///       child: Icon(Icons.navigation),
 ///       backgroundColor: Colors.green,
 ///     ),
 ///   );
@@ -114,7 +114,7 @@ enum _FloatingActionButtonType {
 ///         // Add your onPressed code here!
 ///       },
 ///       label: const Text('Approve'),
-///       icon: const Icon(Icons.thumb_up),
+///       icon: Icon(Icons.thumb_up),
 ///       backgroundColor: Colors.pink,
 ///     ),
 ///   );

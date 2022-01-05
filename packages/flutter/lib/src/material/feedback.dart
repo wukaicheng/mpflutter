@@ -122,9 +122,7 @@ class Feedback {
   ///
   ///  * [wrapForLongPress] to trigger platform-specific feedback before
   ///    executing a [GestureLongPressCallback].
-  static Future<void> forLongPress(BuildContext context) {
-    throw '';
-  }
+  static Future<void> forLongPress(BuildContext context) async {}
 
   /// Wraps a [GestureLongPressCallback] to provide platform specific feedback
   /// for a long press before the provided callback is executed.

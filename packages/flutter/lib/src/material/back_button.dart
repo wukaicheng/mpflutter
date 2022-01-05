@@ -151,7 +151,7 @@ class CloseButton extends StatelessWidget {
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterialLocalizations(context));
     return IconButton(
-      icon: const Icon(Icons.close),
+      icon: Icon(Icons.close),
       color: color,
       onPressed: () {
         if (onPressed != null) {

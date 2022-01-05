@@ -878,7 +878,7 @@ class DataTable extends StatelessWidget {
   }) {
     final ThemeData themeData = Theme.of(context);
     if (showEditIcon) {
-      const Widget icon = Icon(Icons.edit, size: 18.0);
+      Widget icon = Icon(Icons.edit, size: 18.0);
       label = Expanded(child: label);
       label = Row(
         textDirection: numeric ? TextDirection.rtl : null,
@@ -1321,7 +1321,7 @@ class _SortArrowState extends State<_SortArrow> with TickerProviderStateMixin {
             Matrix4.rotationZ(_orientationOffset + _orientationAnimation.value)
               ..setTranslationRaw(0.0, _arrowIconBaselineOffset, 0.0),
         alignment: Alignment.center,
-        child: const Icon(
+        child: Icon(
           Icons.arrow_upward,
           size: _arrowIconSize,
         ),

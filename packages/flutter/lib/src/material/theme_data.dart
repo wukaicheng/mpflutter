@@ -39,7 +39,6 @@ import 'switch_theme.dart';
 import 'tab_bar_theme.dart';
 import 'text_button_theme.dart';
 import 'text_theme.dart';
-import 'time_picker_theme.dart';
 import 'toggle_buttons_theme.dart';
 import 'typography.dart';
 
@@ -176,7 +175,7 @@ enum MaterialTapTargetSize {
 ///       title: const Text('ThemeData Demo'),
 ///     ),
 ///     floatingActionButton: FloatingActionButton(
-///       child: const Icon(Icons.add),
+///       child: Icon(Icons.add),
 ///       onPressed: () {},
 ///     ),
 ///     body: const Center(
@@ -319,7 +318,6 @@ class ThemeData with Diagnosticable {
     DividerThemeData? dividerTheme,
     ButtonBarThemeData? buttonBarTheme,
     BottomNavigationBarThemeData? bottomNavigationBarTheme,
-    TimePickerThemeData? timePickerTheme,
     TextButtonThemeData? textButtonTheme,
     ElevatedButtonThemeData? elevatedButtonTheme,
     OutlinedButtonThemeData? outlinedButtonTheme,
@@ -476,7 +474,6 @@ class ThemeData with Diagnosticable {
     dividerTheme ??= const DividerThemeData();
     buttonBarTheme ??= const ButtonBarThemeData();
     bottomNavigationBarTheme ??= const BottomNavigationBarThemeData();
-    timePickerTheme ??= const TimePickerThemeData();
     textButtonTheme ??= const TextButtonThemeData();
     elevatedButtonTheme ??= const ElevatedButtonThemeData();
     outlinedButtonTheme ??= const OutlinedButtonThemeData();
@@ -552,7 +549,6 @@ class ThemeData with Diagnosticable {
       dividerTheme: dividerTheme,
       buttonBarTheme: buttonBarTheme,
       bottomNavigationBarTheme: bottomNavigationBarTheme,
-      timePickerTheme: timePickerTheme,
       textButtonTheme: textButtonTheme,
       elevatedButtonTheme: elevatedButtonTheme,
       outlinedButtonTheme: outlinedButtonTheme,
@@ -679,7 +675,6 @@ class ThemeData with Diagnosticable {
     required this.dividerTheme,
     required this.buttonBarTheme,
     required this.bottomNavigationBarTheme,
-    required this.timePickerTheme,
     required this.textButtonTheme,
     required this.elevatedButtonTheme,
     required this.outlinedButtonTheme,
@@ -758,7 +753,6 @@ class ThemeData with Diagnosticable {
         assert(dividerTheme != null),
         assert(buttonBarTheme != null),
         assert(bottomNavigationBarTheme != null),
-        assert(timePickerTheme != null),
         assert(textButtonTheme != null),
         assert(elevatedButtonTheme != null),
         assert(outlinedButtonTheme != null),
@@ -1273,9 +1267,6 @@ class ThemeData with Diagnosticable {
   /// widgets.
   final BottomNavigationBarThemeData bottomNavigationBarTheme;
 
-  /// A theme for customizing the appearance and layout of time picker widgets.
-  final TimePickerThemeData timePickerTheme;
-
   /// A theme for customizing the appearance and internal layout of
   /// [TextButton]s.
   final TextButtonThemeData textButtonTheme;
@@ -1435,7 +1426,6 @@ class ThemeData with Diagnosticable {
     DividerThemeData? dividerTheme,
     ButtonBarThemeData? buttonBarTheme,
     BottomNavigationBarThemeData? bottomNavigationBarTheme,
-    TimePickerThemeData? timePickerTheme,
     TextButtonThemeData? textButtonTheme,
     ElevatedButtonThemeData? elevatedButtonTheme,
     OutlinedButtonThemeData? outlinedButtonTheme,
@@ -1530,7 +1520,6 @@ class ThemeData with Diagnosticable {
       buttonBarTheme: buttonBarTheme ?? this.buttonBarTheme,
       bottomNavigationBarTheme:
           bottomNavigationBarTheme ?? this.bottomNavigationBarTheme,
-      timePickerTheme: timePickerTheme ?? this.timePickerTheme,
       textButtonTheme: textButtonTheme ?? this.textButtonTheme,
       elevatedButtonTheme: elevatedButtonTheme ?? this.elevatedButtonTheme,
       outlinedButtonTheme: outlinedButtonTheme ?? this.outlinedButtonTheme,
@@ -1716,8 +1705,6 @@ class ThemeData with Diagnosticable {
           ButtonBarThemeData.lerp(a.buttonBarTheme, b.buttonBarTheme, t)!,
       bottomNavigationBarTheme: BottomNavigationBarThemeData.lerp(
           a.bottomNavigationBarTheme, b.bottomNavigationBarTheme, t),
-      timePickerTheme:
-          TimePickerThemeData.lerp(a.timePickerTheme, b.timePickerTheme, t),
       textButtonTheme:
           TextButtonThemeData.lerp(a.textButtonTheme, b.textButtonTheme, t)!,
       elevatedButtonTheme: ElevatedButtonThemeData.lerp(
@@ -1806,7 +1793,6 @@ class ThemeData with Diagnosticable {
         other.dividerTheme == dividerTheme &&
         other.buttonBarTheme == buttonBarTheme &&
         other.bottomNavigationBarTheme == bottomNavigationBarTheme &&
-        other.timePickerTheme == timePickerTheme &&
         other.textButtonTheme == textButtonTheme &&
         other.elevatedButtonTheme == elevatedButtonTheme &&
         other.outlinedButtonTheme == outlinedButtonTheme &&
@@ -1887,7 +1873,6 @@ class ThemeData with Diagnosticable {
       dividerTheme,
       buttonBarTheme,
       bottomNavigationBarTheme,
-      timePickerTheme,
       textButtonTheme,
       elevatedButtonTheme,
       outlinedButtonTheme,
@@ -2063,10 +2048,6 @@ class ThemeData with Diagnosticable {
     properties.add(DiagnosticsProperty<ButtonBarThemeData>(
         'buttonBarTheme', buttonBarTheme,
         defaultValue: defaultData.buttonBarTheme,
-        level: DiagnosticLevel.debug));
-    properties.add(DiagnosticsProperty<TimePickerThemeData>(
-        'timePickerTheme', timePickerTheme,
-        defaultValue: defaultData.timePickerTheme,
         level: DiagnosticLevel.debug));
     properties.add(DiagnosticsProperty<BottomNavigationBarThemeData>(
         'bottomNavigationBarTheme', bottomNavigationBarTheme,

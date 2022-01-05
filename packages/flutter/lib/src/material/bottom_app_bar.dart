@@ -131,7 +131,7 @@ import 'theme.dart';
 ///         floatingActionButton: _showFab
 ///             ? FloatingActionButton(
 ///                 onPressed: () {},
-///                 child: const Icon(Icons.add),
+///                 child: Icon(Icons.add),
 ///                 tooltip: 'Create',
 ///               )
 ///             : null,
@@ -170,18 +170,18 @@ import 'theme.dart';
 ///           children: <Widget>[
 ///             IconButton(
 ///               tooltip: 'Open navigation menu',
-///               icon: const Icon(Icons.menu),
+///               icon: Icon(Icons.menu),
 ///               onPressed: () {},
 ///             ),
 ///             if (centerLocations.contains(fabLocation)) const Spacer(),
 ///             IconButton(
 ///               tooltip: 'Search',
-///               icon: const Icon(Icons.search),
+///               icon: Icon(Icons.search),
 ///               onPressed: () {},
 ///             ),
 ///             IconButton(
 ///               tooltip: 'Favorite',
-///               icon: const Icon(Icons.favorite),
+///               icon: Icon(Icons.favorite),
 ///               onPressed: () {},
 ///             ),
 ///           ],

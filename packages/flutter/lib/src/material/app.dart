@@ -691,7 +691,7 @@ class _MaterialAppState extends State<MaterialApp> {
     return FloatingActionButton(
       onPressed: onPressed,
       mini: true,
-      child: const Icon(Icons.search),
+      child: Icon(Icons.search),
     );
   }
 

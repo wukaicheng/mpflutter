@@ -387,7 +387,7 @@ enum ListTileControlAffinity {
 /// int _act = 1;
 /// // ...
 /// ListTile(
-///   leading: const Icon(Icons.flight_land),
+///   leading: Icon(Icons.flight_land),
 ///   title: const Text("Trix's airplane"),
 ///   subtitle: _act != 2 ? const Text('The airplane is only in Act II.') : null,
 ///   enabled: _act == 2,

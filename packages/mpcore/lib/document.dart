@@ -369,9 +369,6 @@ class MPElement {
       fromFlutterElementMethodCache[element.widget.runtimeType] =
           _encodeAbsorbPointer;
       return _encodeAbsorbPointer(element);
-    } else if (element.widget is Icon) {
-      fromFlutterElementMethodCache[element.widget.runtimeType] = _encodeIcon;
-      return _encodeIcon(element);
     } else if (element.widget is CustomScrollView) {
       fromFlutterElementMethodCache[element.widget.runtimeType] =
           _encodeCustomScrollView;

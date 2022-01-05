@@ -325,7 +325,7 @@ class _ExpansionTileState extends State<ExpansionTile>
   Widget? _buildIcon(BuildContext context) {
     return RotationTransition(
       turns: _iconTurns,
-      child: const Icon(Icons.expand_more),
+      child: Icon(Icons.expand_more),
     );
   }
 

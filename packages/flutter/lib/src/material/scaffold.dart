@@ -203,7 +203,7 @@ class ScaffoldMessenger extends StatefulWidget {
   ///         floatingActionButton: FloatingActionButton(
   ///           onPressed: _incrementCounter,
   ///           tooltip: 'Increment',
-  ///           child: const Icon(Icons.add),
+  ///           child: Icon(Icons.add),
   ///         ),
   ///       ),
   ///     );
@@ -1515,7 +1515,7 @@ class _FloatingActionButtonTransitionState
 ///     floatingActionButton: FloatingActionButton(
 ///       onPressed: () => setState(() => _count++),
 ///       tooltip: 'Increment Counter',
-///       child: const Icon(Icons.add),
+///       child: Icon(Icons.add),
 ///     ),
 ///   );
 /// }
@@ -1546,7 +1546,7 @@ class _FloatingActionButtonTransitionState
 ///     floatingActionButton: FloatingActionButton(
 ///       onPressed: () => setState(() => _count++),
 ///       tooltip: 'Increment Counter',
-///       child: const Icon(Icons.add),
+///       child: Icon(Icons.add),
 ///     ),
 ///   );
 /// }
@@ -1584,7 +1584,7 @@ class _FloatingActionButtonTransitionState
 ///         _count++;
 ///       }),
 ///       tooltip: 'Increment Counter',
-///       child: const Icon(Icons.add),
+///       child: Icon(Icons.add),
 ///     ),
 ///     floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 ///   );

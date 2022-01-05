@@ -759,14 +759,14 @@ class _MonthPickerState extends State<_MonthPicker> {
               children: <Widget>[
                 const Spacer(),
                 IconButton(
-                  icon: const Icon(Icons.chevron_left),
+                  icon: Icon(Icons.chevron_left),
                   color: controlColor,
                   tooltip: _isDisplayingFirstMonth ? null : previousTooltipText,
                   onPressed:
                       _isDisplayingFirstMonth ? null : _handlePreviousMonth,
                 ),
                 IconButton(
-                  icon: const Icon(Icons.chevron_right),
+                  icon: Icon(Icons.chevron_right),
                   color: controlColor,
                   tooltip: _isDisplayingLastMonth ? null : nextTooltipText,
                   onPressed: _isDisplayingLastMonth ? null : _handleNextMonth,

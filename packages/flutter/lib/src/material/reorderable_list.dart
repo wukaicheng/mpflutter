@@ -447,7 +447,7 @@ class _ReorderableListViewState extends State<ReorderableListView> {
                       alignment: AlignmentDirectional.bottomCenter,
                       child: ReorderableDragStartListener(
                         index: index,
-                        child: const Icon(Icons.drag_handle),
+                        child: Icon(Icons.drag_handle),
                       ),
                     ),
                   ),
@@ -467,7 +467,7 @@ class _ReorderableListViewState extends State<ReorderableListView> {
                       alignment: AlignmentDirectional.centerEnd,
                       child: ReorderableDragStartListener(
                         index: index,
-                        child: const Icon(Icons.drag_handle),
+                        child: Icon(Icons.drag_handle),
                       ),
                     ),
                   ),

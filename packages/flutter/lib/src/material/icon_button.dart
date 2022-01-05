@@ -57,7 +57,7 @@ const double _kMinButtonSize = kMinInteractiveDimension;
 ///     mainAxisSize: MainAxisSize.min,
 ///     children: <Widget>[
 ///       IconButton(
-///         icon: const Icon(Icons.volume_up),
+///         icon: Icon(Icons.volume_up),
 ///         tooltip: 'Increase volume by 10',
 ///         onPressed: () {
 ///           setState(() {
@@ -105,7 +105,7 @@ const double _kMinButtonSize = kMinInteractiveDimension;
 ///           shape: CircleBorder(),
 ///         ),
 ///         child: IconButton(
-///           icon: const Icon(Icons.android),
+///           icon: Icon(Icons.android),
 ///           color: Colors.white,
 ///           onPressed: () {},
 ///         ),

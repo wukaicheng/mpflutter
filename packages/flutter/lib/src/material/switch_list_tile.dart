@@ -65,7 +65,7 @@ enum _SwitchListTileType { material, adaptive }
 ///     title: const Text('Lights'),
 ///     value: _lights,
 ///     onChanged: (bool value) { setState(() { _lights = value; }); },
-///     secondary: const Icon(Icons.lightbulb_outline),
+///     secondary: Icon(Icons.lightbulb_outline),
 ///   );
 /// }
 /// ```
@@ -280,13 +280,13 @@ class SwitchListTile extends StatelessWidget {
     this.controlAffinity = ListTileControlAffinity.platform,
     this.shape,
     this.selectedTileColor,
-  }) : _switchListTileType = _SwitchListTileType.material,
-       assert(value != null),
-       assert(isThreeLine != null),
-       assert(!isThreeLine || subtitle != null),
-       assert(selected != null),
-       assert(autofocus != null),
-       super(key: key);
+  })  : _switchListTileType = _SwitchListTileType.material,
+        assert(value != null),
+        assert(isThreeLine != null),
+        assert(!isThreeLine || subtitle != null),
+        assert(selected != null),
+        assert(autofocus != null),
+        super(key: key);
 
   /// Creates a Material [ListTile] with an adaptive [Switch], following
   /// Material design's
@@ -322,13 +322,13 @@ class SwitchListTile extends StatelessWidget {
     this.controlAffinity = ListTileControlAffinity.platform,
     this.shape,
     this.selectedTileColor,
-  }) : _switchListTileType = _SwitchListTileType.adaptive,
-       assert(value != null),
-       assert(isThreeLine != null),
-       assert(!isThreeLine || subtitle != null),
-       assert(selected != null),
-       assert(autofocus != null),
-       super(key: key);
+  })  : _switchListTileType = _SwitchListTileType.adaptive,
+        assert(value != null),
+        assert(isThreeLine != null),
+        assert(!isThreeLine || subtitle != null),
+        assert(selected != null),
+        assert(autofocus != null),
+        super(key: key);
 
   /// Whether this switch is checked.
   ///
@@ -517,7 +517,11 @@ class SwitchListTile extends StatelessWidget {
           dense: dense,
           contentPadding: contentPadding,
           enabled: onChanged != null,
-          onTap: onChanged != null ? () { onChanged!(!value); } : null,
+          onTap: onChanged != null
+              ? () {
+                  onChanged!(!value);
+                }
+              : null,
           selected: selected,
           selectedTileColor: selectedTileColor,
           autofocus: autofocus,

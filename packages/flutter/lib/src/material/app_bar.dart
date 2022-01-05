@@ -115,7 +115,7 @@ class _PreferredAppBarSize extends Size {
 ///       title: const Text('AppBar Demo'),
 ///       actions: <Widget>[
 ///         IconButton(
-///           icon: const Icon(Icons.add_alert),
+///           icon: Icon(Icons.add_alert),
 ///           tooltip: 'Show Snackbar',
 ///           onPressed: () {
 ///             ScaffoldMessenger.of(context).showSnackBar(
@@ -124,7 +124,7 @@ class _PreferredAppBarSize extends Size {
 ///           },
 ///         ),
 ///         IconButton(
-///           icon: const Icon(Icons.navigate_next),
+///           icon: Icon(Icons.navigate_next),
 ///           tooltip: 'Go to the next page',
 ///           onPressed: () {
 ///             Navigator.push(context, MaterialPageRoute<void>(
@@ -314,7 +314,7 @@ class AppBar extends StatefulWidget implements PreferredSizeWidget {
   ///   leading: Builder(
   ///     builder: (BuildContext context) {
   ///       return IconButton(
-  ///         icon: const Icon(Icons.menu),
+  ///         icon: Icon(Icons.menu),
   ///         onPressed: () { Scaffold.of(context).openDrawer(); },
   ///         tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
   ///       );
@@ -404,7 +404,7 @@ class AppBar extends StatefulWidget implements PreferredSizeWidget {
   ///         title: const Text('Hello World'),
   ///         actions: <Widget>[
   ///           IconButton(
-  ///             icon: const Icon(Icons.shopping_cart),
+  ///             icon: Icon(Icons.shopping_cart),
   ///             tooltip: 'Open shopping cart',
   ///             onPressed: () {
   ///               // handle the press
@@ -952,7 +952,7 @@ class _AppBarState extends State<AppBar> {
     if (leading == null && widget.automaticallyImplyLeading) {
       if (hasDrawer) {
         leading = IconButton(
-          icon: const Icon(Icons.menu),
+          icon: Icon(Icons.menu),
           iconSize: overallIconTheme.size ?? 24,
           onPressed: _handleDrawerButton,
           tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
@@ -1027,7 +1027,7 @@ class _AppBarState extends State<AppBar> {
       );
     } else if (hasEndDrawer) {
       actions = IconButton(
-        icon: const Icon(Icons.menu),
+        icon: Icon(Icons.menu),
         iconSize: overallIconTheme.size ?? 24,
         onPressed: _handleDrawerButtonEnd,
         tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
@@ -1387,7 +1387,7 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
 ///   ),
 ///   actions: <Widget>[
 ///     IconButton(
-///       icon: const Icon(Icons.add_circle),
+///       icon: Icon(Icons.add_circle),
 ///       tooltip: 'Add new entry',
 ///       onPressed: () { /* ... */ },
 ///     ),

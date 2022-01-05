@@ -3,4 +3,5 @@ import 'package:flutter/widgets.dart';
 
 class MaterialAdapter {
   static Widget Function(BuildContext, Scaffold)? scaffoldBuilder;
+  static Widget Function(BuildContext, Icon)? iconBuilder;
 }
