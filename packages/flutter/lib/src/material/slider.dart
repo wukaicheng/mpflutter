@@ -743,15 +743,6 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
             color: theme.colorScheme.onPrimary,
           ),
     );
-    final MouseCursor effectiveMouseCursor =
-        MaterialStateProperty.resolveAs<MouseCursor>(
-      widget.mouseCursor ?? MaterialStateMouseCursor.clickable,
-      <MaterialState>{
-        if (!_enabled) MaterialState.disabled,
-        if (_hovering) MaterialState.hovered,
-        if (_focused) MaterialState.focused,
-      },
-    );
 
     // This size is used as the max bounds for the painting of the value
     // indicators It must be kept in sync with the function with the same name
@@ -768,7 +759,6 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
         enabled: _enabled,
         onShowFocusHighlight: _handleFocusHighlightChanged,
         onShowHoverHighlight: _handleHoverChanged,
-        mouseCursor: effectiveMouseCursor,
         child: CompositedTransformTarget(
           link: _layerLink,
           child: _SliderRenderObjectWidget(

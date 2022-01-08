@@ -1309,7 +1309,6 @@ class _TabBarState extends State<TabBar> {
     final int tabCount = widget.tabs.length;
     for (int index = 0; index < tabCount; index += 1) {
       wrappedTabs[index] = InkWell(
-        mouseCursor: widget.mouseCursor ?? SystemMouseCursors.click,
         onTap: () {
           _handleTap(index);
         },

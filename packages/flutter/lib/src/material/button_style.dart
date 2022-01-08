@@ -112,7 +112,6 @@ class ButtonStyle with Diagnosticable {
     this.maximumSize,
     this.side,
     this.shape,
-    this.mouseCursor,
     this.visualDensity,
     this.tapTargetSize,
     this.animationDuration,
@@ -194,10 +193,6 @@ class ButtonStyle with Diagnosticable {
   /// This shape is combined with [side] to create a shape decorated
   /// with an outline.
   final MaterialStateProperty<OutlinedBorder?>? shape;
-
-  /// The cursor for a mouse pointer when it enters or is hovering over
-  /// this button's [InkWell].
-  final MaterialStateProperty<MouseCursor?>? mouseCursor;
 
   /// Defines how compact the button's layout will be.
   ///
@@ -295,7 +290,6 @@ class ButtonStyle with Diagnosticable {
       maximumSize: maximumSize ?? this.maximumSize,
       side: side ?? this.side,
       shape: shape ?? this.shape,
-      mouseCursor: mouseCursor ?? this.mouseCursor,
       visualDensity: visualDensity ?? this.visualDensity,
       tapTargetSize: tapTargetSize ?? this.tapTargetSize,
       animationDuration: animationDuration ?? this.animationDuration,
@@ -325,7 +319,6 @@ class ButtonStyle with Diagnosticable {
       maximumSize: maximumSize ?? style.maximumSize,
       side: side ?? style.side,
       shape: shape ?? style.shape,
-      mouseCursor: mouseCursor ?? style.mouseCursor,
       visualDensity: visualDensity ?? style.visualDensity,
       tapTargetSize: tapTargetSize ?? style.tapTargetSize,
       animationDuration: animationDuration ?? style.animationDuration,
@@ -350,7 +343,6 @@ class ButtonStyle with Diagnosticable {
       maximumSize,
       side,
       shape,
-      mouseCursor,
       visualDensity,
       tapTargetSize,
       animationDuration,
@@ -377,7 +369,6 @@ class ButtonStyle with Diagnosticable {
         other.maximumSize == maximumSize &&
         other.side == side &&
         other.shape == shape &&
-        other.mouseCursor == mouseCursor &&
         other.visualDensity == visualDensity &&
         other.tapTargetSize == tapTargetSize &&
         other.animationDuration == animationDuration &&
@@ -426,9 +417,6 @@ class ButtonStyle with Diagnosticable {
     properties.add(DiagnosticsProperty<MaterialStateProperty<OutlinedBorder?>>(
         'shape', shape,
         defaultValue: null));
-    properties.add(DiagnosticsProperty<MaterialStateProperty<MouseCursor?>>(
-        'mouseCursor', mouseCursor,
-        defaultValue: null));
     properties.add(DiagnosticsProperty<VisualDensity>(
         'visualDensity', visualDensity,
         defaultValue: null));
@@ -472,7 +460,6 @@ class ButtonStyle with Diagnosticable {
           _lerpProperties<Size?>(a?.maximumSize, b?.maximumSize, t, Size.lerp),
       side: _lerpSides(a?.side, b?.side, t),
       shape: _lerpShapes(a?.shape, b?.shape, t),
-      mouseCursor: t < 0.5 ? a?.mouseCursor : b?.mouseCursor,
       visualDensity: t < 0.5 ? a?.visualDensity : b?.visualDensity,
       tapTargetSize: t < 0.5 ? a?.tapTargetSize : b?.tapTargetSize,
       animationDuration: t < 0.5 ? a?.animationDuration : b?.animationDuration,

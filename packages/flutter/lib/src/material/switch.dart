@@ -393,7 +393,6 @@ class Switch extends StatelessWidget {
       trackColor: trackColor,
       materialTapTargetSize: materialTapTargetSize,
       dragStartBehavior: dragStartBehavior,
-      mouseCursor: mouseCursor,
       focusColor: focusColor,
       hoverColor: hoverColor,
       overlayColor: overlayColor,

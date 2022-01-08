@@ -88,7 +88,6 @@ class SwitchThemeData with Diagnosticable {
       trackColor: trackColor ?? this.trackColor,
       materialTapTargetSize:
           materialTapTargetSize ?? this.materialTapTargetSize,
-      mouseCursor: mouseCursor ?? this.mouseCursor,
       overlayColor: overlayColor ?? this.overlayColor,
       splashRadius: splashRadius ?? this.splashRadius,
     );
@@ -106,7 +105,6 @@ class SwitchThemeData with Diagnosticable {
           _lerpProperties<Color?>(a?.trackColor, b?.trackColor, t, Color.lerp),
       materialTapTargetSize:
           t < 0.5 ? a?.materialTapTargetSize : b?.materialTapTargetSize,
-      mouseCursor: t < 0.5 ? a?.mouseCursor : b?.mouseCursor,
       overlayColor: _lerpProperties<Color?>(
           a?.overlayColor, b?.overlayColor, t, Color.lerp),
       splashRadius: lerpDouble(a?.splashRadius, b?.splashRadius, t),

@@ -694,7 +694,6 @@ class ToggleButtons extends StatelessWidget {
                 onPressed!(index);
               }
             : null,
-        mouseCursor: mouseCursor,
         leadingBorderSide: leadingBorderSide,
         borderSide: borderSide,
         trailingBorderSide: trailingBorderSide,
@@ -990,7 +989,6 @@ class _ToggleButton extends StatelessWidget {
         focusNode: focusNode,
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
         onPressed: onPressed,
-        mouseCursor: mouseCursor,
         child: child,
       ),
     );

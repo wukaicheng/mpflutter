@@ -84,7 +84,6 @@ class RadioThemeData with Diagnosticable {
     VisualDensity? visualDensity,
   }) {
     return RadioThemeData(
-      mouseCursor: mouseCursor ?? this.mouseCursor,
       fillColor: fillColor ?? this.fillColor,
       overlayColor: overlayColor ?? this.overlayColor,
       splashRadius: splashRadius ?? this.splashRadius,
@@ -99,7 +98,6 @@ class RadioThemeData with Diagnosticable {
   /// {@macro dart.ui.shadow.lerp}
   static RadioThemeData lerp(RadioThemeData? a, RadioThemeData? b, double t) {
     return RadioThemeData(
-      mouseCursor: t < 0.5 ? a?.mouseCursor : b?.mouseCursor,
       fillColor:
           _lerpProperties<Color?>(a?.fillColor, b?.fillColor, t, Color.lerp),
       materialTapTargetSize:

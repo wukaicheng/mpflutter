@@ -53,7 +53,6 @@ class RawMaterialButton extends StatefulWidget {
     required this.onPressed,
     this.onLongPress,
     this.onHighlightChanged,
-    this.mouseCursor,
     this.textStyle,
     this.fillColor,
     this.focusColor,
@@ -116,22 +115,6 @@ class RawMaterialButton extends StatefulWidget {
   /// this can fire during the build phase (in which case calling
   /// [State.setState] is not allowed).
   final ValueChanged<bool>? onHighlightChanged;
-
-  /// {@template flutter.material.RawMaterialButton.mouseCursor}
-  /// The cursor for a mouse pointer when it enters or is hovering over the
-  /// button.
-  ///
-  /// If [mouseCursor] is a [MaterialStateProperty<MouseCursor>],
-  /// [MaterialStateProperty.resolve] is used for the following [MaterialState]s:
-  ///
-  ///  * [MaterialState.pressed].
-  ///  * [MaterialState.hovered].
-  ///  * [MaterialState.focused].
-  ///  * [MaterialState.disabled].
-  ///
-  /// If this property is null, [MaterialStateMouseCursor.clickable] will be used.
-  /// {@endtemplate}
-  final MouseCursor? mouseCursor;
 
   /// Defines the default text style, with [Material.textStyle], for the
   /// button's [child].
@@ -365,11 +348,6 @@ class _RawMaterialButtonState extends State<RawMaterialButton>
     final Offset densityAdjustment = widget.visualDensity.baseSizeAdjustment;
     final BoxConstraints effectiveConstraints =
         widget.visualDensity.effectiveConstraints(widget.constraints);
-    final MouseCursor? effectiveMouseCursor =
-        MaterialStateProperty.resolveAs<MouseCursor?>(
-      widget.mouseCursor ?? MaterialStateMouseCursor.clickable,
-      materialStates,
-    );
     final EdgeInsetsGeometry padding = widget.padding
         .add(
           EdgeInsets.only(
@@ -409,7 +387,6 @@ class _RawMaterialButtonState extends State<RawMaterialButton>
           onLongPress: widget.onLongPress,
           enableFeedback: widget.enableFeedback,
           customBorder: effectiveShape,
-          mouseCursor: effectiveMouseCursor,
           child: IconTheme.merge(
             data: IconThemeData(color: effectiveTextColor),
             child: Container(

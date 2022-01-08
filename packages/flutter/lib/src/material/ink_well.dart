@@ -309,7 +309,6 @@ class InkResponse extends StatelessWidget {
     this.onLongPress,
     this.onHighlightChanged,
     this.onHover,
-    this.mouseCursor,
     this.containedInkWell = false,
     this.highlightShape = BoxShape.circle,
     this.radius,
@@ -376,19 +375,6 @@ class InkResponse extends StatelessWidget {
   /// part of the material and false if a pointer has exited this part of the
   /// material.
   final ValueChanged<bool>? onHover;
-
-  /// The cursor for a mouse pointer when it enters or is hovering over the
-  /// widget.
-  ///
-  /// If [mouseCursor] is a [MaterialStateProperty<MouseCursor>],
-  /// [MaterialStateProperty.resolve] is used for the following [MaterialState]s:
-  ///
-  ///  * [MaterialState.hovered].
-  ///  * [MaterialState.focused].
-  ///  * [MaterialState.disabled].
-  ///
-  /// If this property is null, [MaterialStateMouseCursor.clickable] will be used.
-  final MouseCursor? mouseCursor;
 
   /// Whether this ink response should be clipped its bounds.
   ///
@@ -597,7 +583,6 @@ class InkResponse extends StatelessWidget {
       onLongPress: onLongPress,
       onHighlightChanged: onHighlightChanged,
       onHover: onHover,
-      mouseCursor: mouseCursor,
       containedInkWell: containedInkWell,
       highlightShape: highlightShape,
       radius: radius,
@@ -1241,7 +1226,6 @@ class InkWell extends InkResponse {
     GestureTapCancelCallback? onTapCancel,
     ValueChanged<bool>? onHighlightChanged,
     ValueChanged<bool>? onHover,
-    MouseCursor? mouseCursor,
     Color? focusColor,
     Color? hoverColor,
     Color? highlightColor,
@@ -1267,7 +1251,6 @@ class InkWell extends InkResponse {
           onTapCancel: onTapCancel,
           onHighlightChanged: onHighlightChanged,
           onHover: onHover,
-          mouseCursor: mouseCursor,
           containedInkWell: true,
           highlightShape: BoxShape.rectangle,
           focusColor: focusColor,

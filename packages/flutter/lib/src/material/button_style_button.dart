@@ -258,11 +258,6 @@ class _ButtonStyleState extends State<ButtonStyleButton>
     final OutlinedBorder? resolvedShape =
         resolve<OutlinedBorder?>((ButtonStyle? style) => style?.shape);
 
-    final MaterialStateMouseCursor resolvedMouseCursor = _MouseCursor(
-      (Set<MaterialState> states) => effectiveValue(
-          (ButtonStyle? style) => style?.mouseCursor?.resolve(states)),
-    );
-
     final MaterialStateProperty<Color?> overlayColor =
         MaterialStateProperty.resolveWith<Color?>(
       (Set<MaterialState> states) => effectiveValue(
@@ -367,7 +362,6 @@ class _ButtonStyleState extends State<ButtonStyleButton>
           onLongPress: widget.onLongPress,
           onHighlightChanged: updateMaterialState(MaterialState.pressed),
           onHover: updateMaterialState(MaterialState.hovered),
-          mouseCursor: resolvedMouseCursor,
           enableFeedback: resolvedEnableFeedback,
           focusNode: widget.focusNode,
           canRequestFocus: widget.enabled,
@@ -412,10 +406,7 @@ class _ButtonStyleState extends State<ButtonStyleButton>
       container: true,
       button: true,
       enabled: widget.enabled,
-      child: _InputPadding(
-        minSize: minSize,
-        child: result,
-      ),
+      child: result,
     );
   }
 }

@@ -111,7 +111,6 @@ class CheckboxThemeData with Diagnosticable {
     BorderSide? side,
   }) {
     return CheckboxThemeData(
-      mouseCursor: mouseCursor ?? this.mouseCursor,
       fillColor: fillColor ?? this.fillColor,
       checkColor: checkColor ?? this.checkColor,
       overlayColor: overlayColor ?? this.overlayColor,
@@ -130,7 +129,6 @@ class CheckboxThemeData with Diagnosticable {
   static CheckboxThemeData lerp(
       CheckboxThemeData? a, CheckboxThemeData? b, double t) {
     return CheckboxThemeData(
-      mouseCursor: t < 0.5 ? a?.mouseCursor : b?.mouseCursor,
       fillColor:
           _lerpProperties<Color?>(a?.fillColor, b?.fillColor, t, Color.lerp),
       checkColor:

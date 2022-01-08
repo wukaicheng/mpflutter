@@ -21,7 +21,6 @@ import 'chip_theme.dart';
 import 'color_scheme.dart';
 import 'colors.dart';
 import 'data_table_theme.dart';
-import 'dialog_theme.dart';
 import 'divider_theme.dart';
 import 'elevated_button_theme.dart';
 import 'floating_action_button_theme.dart';
@@ -30,7 +29,6 @@ import 'ink_well.dart' show InteractiveInkFeatureFactory;
 import 'input_decorator.dart';
 import 'outlined_button_theme.dart';
 import 'page_transitions_theme.dart';
-import 'popup_menu_theme.dart';
 import 'progress_indicator_theme.dart';
 import 'radio_theme.dart';
 import 'slider_theme.dart';
@@ -308,12 +306,10 @@ class ThemeData with Diagnosticable {
     AppBarTheme? appBarTheme,
     BottomAppBarTheme? bottomAppBarTheme,
     ColorScheme? colorScheme,
-    DialogTheme? dialogTheme,
     FloatingActionButtonThemeData? floatingActionButtonTheme,
     Typography? typography,
     SnackBarThemeData? snackBarTheme,
     BottomSheetThemeData? bottomSheetTheme,
-    PopupMenuThemeData? popupMenuTheme,
     MaterialBannerThemeData? bannerTheme,
     DividerThemeData? dividerTheme,
     ButtonBarThemeData? buttonBarTheme,
@@ -465,11 +461,9 @@ class ThemeData with Diagnosticable {
       brightness: colorScheme.brightness,
       labelStyle: textTheme.bodyText1!,
     );
-    dialogTheme ??= const DialogTheme();
     floatingActionButtonTheme ??= const FloatingActionButtonThemeData();
     snackBarTheme ??= const SnackBarThemeData();
     bottomSheetTheme ??= const BottomSheetThemeData();
-    popupMenuTheme ??= const PopupMenuThemeData();
     bannerTheme ??= const MaterialBannerThemeData();
     dividerTheme ??= const DividerThemeData();
     buttonBarTheme ??= const ButtonBarThemeData();
@@ -539,12 +533,10 @@ class ThemeData with Diagnosticable {
       appBarTheme: appBarTheme,
       bottomAppBarTheme: bottomAppBarTheme,
       colorScheme: colorScheme,
-      dialogTheme: dialogTheme,
       floatingActionButtonTheme: floatingActionButtonTheme,
       typography: typography,
       snackBarTheme: snackBarTheme,
       bottomSheetTheme: bottomSheetTheme,
-      popupMenuTheme: popupMenuTheme,
       bannerTheme: bannerTheme,
       dividerTheme: dividerTheme,
       buttonBarTheme: buttonBarTheme,
@@ -665,12 +657,10 @@ class ThemeData with Diagnosticable {
     required this.appBarTheme,
     required this.bottomAppBarTheme,
     required this.colorScheme,
-    required this.dialogTheme,
     required this.floatingActionButtonTheme,
     required this.typography,
     required this.snackBarTheme,
     required this.bottomSheetTheme,
-    required this.popupMenuTheme,
     required this.bannerTheme,
     required this.dividerTheme,
     required this.buttonBarTheme,
@@ -743,12 +733,10 @@ class ThemeData with Diagnosticable {
         assert(appBarTheme != null),
         assert(bottomAppBarTheme != null),
         assert(colorScheme != null),
-        assert(dialogTheme != null),
         assert(floatingActionButtonTheme != null),
         assert(typography != null),
         assert(snackBarTheme != null),
         assert(bottomSheetTheme != null),
-        assert(popupMenuTheme != null),
         assert(bannerTheme != null),
         assert(dividerTheme != null),
         assert(buttonBarTheme != null),
@@ -1236,9 +1224,6 @@ class ThemeData with Diagnosticable {
   /// A theme for customizing colors, shape, elevation, and behavior of a [SnackBar].
   final SnackBarThemeData snackBarTheme;
 
-  /// A theme for customizing the shape of a dialog.
-  final DialogTheme dialogTheme;
-
   /// A theme for customizing the shape, elevation, and color of a
   /// [FloatingActionButton].
   final FloatingActionButtonThemeData floatingActionButtonTheme;
@@ -1248,10 +1233,6 @@ class ThemeData with Diagnosticable {
 
   /// A theme for customizing the color, elevation, and shape of a bottom sheet.
   final BottomSheetThemeData bottomSheetTheme;
-
-  /// A theme for customizing the color, shape, elevation, and text style of
-  /// popup menus.
-  final PopupMenuThemeData popupMenuTheme;
 
   /// A theme for customizing the color and text style of a [MaterialBanner].
   final MaterialBannerThemeData bannerTheme;
@@ -1416,12 +1397,10 @@ class ThemeData with Diagnosticable {
     AppBarTheme? appBarTheme,
     BottomAppBarTheme? bottomAppBarTheme,
     ColorScheme? colorScheme,
-    DialogTheme? dialogTheme,
     FloatingActionButtonThemeData? floatingActionButtonTheme,
     Typography? typography,
     SnackBarThemeData? snackBarTheme,
     BottomSheetThemeData? bottomSheetTheme,
-    PopupMenuThemeData? popupMenuTheme,
     MaterialBannerThemeData? bannerTheme,
     DividerThemeData? dividerTheme,
     ButtonBarThemeData? buttonBarTheme,
@@ -1508,13 +1487,11 @@ class ThemeData with Diagnosticable {
       bottomAppBarTheme: bottomAppBarTheme ?? this.bottomAppBarTheme,
       colorScheme:
           (colorScheme ?? this.colorScheme).copyWith(brightness: brightness),
-      dialogTheme: dialogTheme ?? this.dialogTheme,
       floatingActionButtonTheme:
           floatingActionButtonTheme ?? this.floatingActionButtonTheme,
       typography: typography ?? this.typography,
       snackBarTheme: snackBarTheme ?? this.snackBarTheme,
       bottomSheetTheme: bottomSheetTheme ?? this.bottomSheetTheme,
-      popupMenuTheme: popupMenuTheme ?? this.popupMenuTheme,
       bannerTheme: bannerTheme ?? this.bannerTheme,
       dividerTheme: dividerTheme ?? this.dividerTheme,
       buttonBarTheme: buttonBarTheme ?? this.buttonBarTheme,
@@ -1688,7 +1665,6 @@ class ThemeData with Diagnosticable {
       bottomAppBarTheme:
           BottomAppBarTheme.lerp(a.bottomAppBarTheme, b.bottomAppBarTheme, t),
       colorScheme: ColorScheme.lerp(a.colorScheme, b.colorScheme, t),
-      dialogTheme: DialogTheme.lerp(a.dialogTheme, b.dialogTheme, t),
       floatingActionButtonTheme: FloatingActionButtonThemeData.lerp(
           a.floatingActionButtonTheme, b.floatingActionButtonTheme, t)!,
       typography: Typography.lerp(a.typography, b.typography, t),
@@ -1696,8 +1672,6 @@ class ThemeData with Diagnosticable {
           SnackBarThemeData.lerp(a.snackBarTheme, b.snackBarTheme, t),
       bottomSheetTheme:
           BottomSheetThemeData.lerp(a.bottomSheetTheme, b.bottomSheetTheme, t)!,
-      popupMenuTheme:
-          PopupMenuThemeData.lerp(a.popupMenuTheme, b.popupMenuTheme, t)!,
       bannerTheme:
           MaterialBannerThemeData.lerp(a.bannerTheme, b.bannerTheme, t),
       dividerTheme: DividerThemeData.lerp(a.dividerTheme, b.dividerTheme, t),
@@ -1783,12 +1757,10 @@ class ThemeData with Diagnosticable {
         other.appBarTheme == appBarTheme &&
         other.bottomAppBarTheme == bottomAppBarTheme &&
         other.colorScheme == colorScheme &&
-        other.dialogTheme == dialogTheme &&
         other.floatingActionButtonTheme == floatingActionButtonTheme &&
         other.typography == typography &&
         other.snackBarTheme == snackBarTheme &&
         other.bottomSheetTheme == bottomSheetTheme &&
-        other.popupMenuTheme == popupMenuTheme &&
         other.bannerTheme == bannerTheme &&
         other.dividerTheme == dividerTheme &&
         other.buttonBarTheme == buttonBarTheme &&
@@ -1863,12 +1835,10 @@ class ThemeData with Diagnosticable {
       appBarTheme,
       bottomAppBarTheme,
       colorScheme,
-      dialogTheme,
       floatingActionButtonTheme,
       typography,
       snackBarTheme,
       bottomSheetTheme,
-      popupMenuTheme,
       bannerTheme,
       dividerTheme,
       buttonBarTheme,
@@ -2020,8 +1990,6 @@ class ThemeData with Diagnosticable {
         level: DiagnosticLevel.debug));
     properties.add(DiagnosticsProperty<ColorScheme>('colorScheme', colorScheme,
         defaultValue: defaultData.colorScheme, level: DiagnosticLevel.debug));
-    properties.add(DiagnosticsProperty<DialogTheme>('dialogTheme', dialogTheme,
-        defaultValue: defaultData.dialogTheme, level: DiagnosticLevel.debug));
     properties.add(DiagnosticsProperty<FloatingActionButtonThemeData>(
         'floatingActionButtonThemeData', floatingActionButtonTheme,
         defaultValue: defaultData.floatingActionButtonTheme,
@@ -2034,10 +2002,6 @@ class ThemeData with Diagnosticable {
     properties.add(DiagnosticsProperty<BottomSheetThemeData>(
         'bottomSheetTheme', bottomSheetTheme,
         defaultValue: defaultData.bottomSheetTheme,
-        level: DiagnosticLevel.debug));
-    properties.add(DiagnosticsProperty<PopupMenuThemeData>(
-        'popupMenuTheme', popupMenuTheme,
-        defaultValue: defaultData.popupMenuTheme,
         level: DiagnosticLevel.debug));
     properties.add(DiagnosticsProperty<MaterialBannerThemeData>(
         'bannerTheme', bannerTheme,

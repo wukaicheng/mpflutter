@@ -134,7 +134,6 @@ class FlatButton extends MaterialButton {
       onPressed: onPressed,
       onLongPress: onLongPress,
       onHighlightChanged: onHighlightChanged,
-      mouseCursor: mouseCursor,
       fillColor: buttonTheme.getFillColor(this),
       textStyle: theme.textTheme.button!
           .copyWith(color: buttonTheme.getTextColor(this)),
